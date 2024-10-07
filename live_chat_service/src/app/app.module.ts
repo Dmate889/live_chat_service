@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
 import { FormsModule } from '@angular/forms';
+import { DisconnectedComponent } from './disconnected/disconnected.component';
 
 
 
@@ -13,6 +14,7 @@ import { FormsModule } from '@angular/forms';
   declarations: [
     AppComponent,
     ChatComponent,
+    DisconnectedComponent,
   ],
   imports: [
     BrowserModule,

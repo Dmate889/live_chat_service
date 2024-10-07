@@ -9,9 +9,13 @@ import { ChatService } from '../chat.service';
 })
 export class ChatComponent implements OnInit {
 
-//For now, the messages are stored here
+//For now, the messages are stored in the messages array
   messages: string[] = []; 
   newMessage: string = ''; 
+  lastMessageTimestamp: number = 0;
+  cooldownTime: number = 300;
+
+  
 
   constructor(private chatService: ChatService) {}
 
@@ -27,10 +31,25 @@ export class ChatComponent implements OnInit {
         })
       }
 
-//The messages that we send to the WS server
+//The messages that we send to the WS server 
   sendMessage(event: Event) {
     event.preventDefault();
+    const currentTime = Date.now();
+    
+//Spam protection
+  if(currentTime - this.lastMessageTimestamp < this.cooldownTime) return alert('If you keep spamming, you will be disconnected from the server')
+
+//if the message is empty, it can not be sent
+    if(this.newMessage.trim() === '')
+    {
+      alert("You can't send empty messages.");  
+      return;
+    }
+
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = ''; 
+    
+    //Setting the message timestamp to date.now() again
+    this.lastMessageTimestamp = currentTime;
   }
 }
