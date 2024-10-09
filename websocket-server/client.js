@@ -15,7 +15,7 @@ ws.on('message', (msg) => {
     console.log(`Message from the server: ${msg}`);
 });
 
-//Client is 'losing' connection to the server. After this point it should not receive the 'ping', and would not send the 'pong' answer
+//Client is 'losing' connection from the server. After this point it should not receive the 'ping', and would not send the 'pong' response
 setTimeout(() => {
     console.log('Simulating connection loss to the server');
     ws.terminate();

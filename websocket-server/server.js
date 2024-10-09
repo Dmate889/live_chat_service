@@ -1,5 +1,6 @@
-// server.js
+//This is the WebSocket server written in Node.js
 const WebSocket = require('ws');
+const db = require('./db');
 
 
 const server = new WebSocket.Server({ port: 8080 });
@@ -7,57 +8,76 @@ const server = new WebSocket.Server({ port: 8080 });
 const MESSAGE_LIMIT = 5;
 const TIME_WINDOW = 5000;
 
-//Connecting to WS
+//Connecting to WS, and iterating through the messages
 server.on('connection', (ws) => {
+
+  db.getMessages((err,messages) => {
+    if(err){
+      console.log('Error fetching messages:', err)
+    }
+    else{
+      messages.forEach((message) => {
+        ws.send(message.content)
+      });
+    }
+  })
   console.log('New client has connected to the server');
   ws.isAlive = true;
 
 //WS healthcheck
-  ws.on('pong', () => {
-    ws.isAlive = true;
-  });
-
-  ws.messageCount = 0;
-  ws.startTime = Date.now();
-
-
-  const interval = setInterval(() => {
-    server.clients.forEach((ws) => {
-        if(!ws.isAlive) return ws.terminate();
-
-        ws.isAlive = false;
-        ws.ping();
+    ws.on('pong', () => {
+      ws.isAlive = true;
     });
-  }, 30000);
-  
-  //Sending the message to all clients + spam protection. If the message limit(5) has been exceeded, the client will be disconnected
-  ws.on('message', (message) => {
 
-    const currentTime = Date.now();
-    if(currentTime - ws.startTime < TIME_WINDOW){
-      ws.messageCount++;
-    } 
-    else
-    {
-      ws.messageCount = 1;
-      ws.startTime = currentTime;
-    }
+    ws.messageCount = 0;
+    ws.startTime = Date.now();
 
-    if(ws.messageCount > MESSAGE_LIMIT)
-    {
-      console.log('Client disconnected due to spamming');
-      ws.close();
-      return;
-    }
 
-    console.log(`New message received: ${message}`);
+    const interval = setInterval(() => {
+      server.clients.forEach((ws) => {
+          if(!ws.isAlive) return ws.terminate();
 
+          ws.isAlive = false;
+          ws.ping();
+      });
+    }, 30000);
     
-    server.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
+  //Sending the message to all clients + spam protection. If the message limit(5) has been exceeded, the client will be disconnected
+    ws.on('message', (message) => {
+
+      const currentTime = Date.now();
+      if(currentTime - ws.startTime < TIME_WINDOW){
+        ws.messageCount++;
+      } 
+      else
+      {
+        ws.messageCount = 1;
+        ws.startTime = currentTime;
       }
-    });
+
+      if(ws.messageCount > MESSAGE_LIMIT)
+      {
+        console.log('Client disconnected due to spamming');
+        ws.close();
+        return;
+      }
+
+      console.log(`New message received: ${message}`);
+
+        db.addMessage(message, (err, lastID) => {
+          if (err) {
+            console.error('Error adding message:', err);
+          } else {
+            console.log(`Message added with ID: ${lastID}`);
+          }
+      });
+
+      
+      server.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(message);
+        }
+      });
   });
 
   
