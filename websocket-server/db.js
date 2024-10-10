@@ -1,41 +1,40 @@
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
 
-//Initiating the SQLite connection
+//Declaring the database
 const db = new sqlite3.Database('./chat.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
-  if (err) {
-    console.error('Error opening database:', err.message);
-  } else {
-    console.log('Connected to the SQLite database.');
-  }
+  if(err) console.log('An error occured during the creation of the database');
+  else console.log('The database has been successfully created');
+
 });
 
-//Creation of the table if we don't have it
-db.run('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)');
+//Create the table
+db.run('CREATE TABLE IF NOT EXISTS messages (id, INTEGER PRIMARY KEY, content TEXT, sender TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)');
 
-//Adding messages
-const addMessage = (message, callback) => {
+//Inserting into the table
+function addMessage(message){
   const query = 'INSERT INTO messages (content) VALUES (?)';
-  db.run(query, [message], function (err) {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, this.lastID);
-  });
-};
 
-//Getting the messages
-const getMessages = (callback) => {
-  const query = 'SELECT content, timestamp FROM messages ORDER BY timestamp ASC';
-  db.all(query, [], (err, rows) => {
-    if (err) {
-      return callback(err);
-    }
-    callback(null, rows);
+  db.run(query, [message], (err) => {
+    if(err) console.log('An error has occured when you tried to run the query: '+ query + err)
   });
-};
+}
 
-//Importing to server.js
+//Running the query on all rows of the table
+function getMessages(callback){
+  const query = 'SELECT content, timestamp, sender FROM messages ORDER BY timestamp ASC';
+
+  db.all(query,[],(err, rows) => {
+    if(err){
+      console.log('An error has occured when you tried to run the query: '+ query + err)
+      return callback(err)
+    } 
+    else callback(null, rows);
+  });
+}
+
 module.exports = {
   addMessage,
-  getMessages,
+  getMessages
 };
+
+

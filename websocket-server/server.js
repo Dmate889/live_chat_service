@@ -11,7 +11,7 @@ const TIME_WINDOW = 5000;
 //Connecting to WS, and iterating through the messages
 server.on('connection', (ws) => {
 
-  db.getMessages((err,messages) => {
+  db.getMessages((err, messages) => {
     if(err){
       console.log('Error fetching messages:', err)
     }
@@ -64,13 +64,7 @@ server.on('connection', (ws) => {
 
       console.log(`New message received: ${message}`);
 
-        db.addMessage(message, (err, lastID) => {
-          if (err) {
-            console.error('Error adding message:', err);
-          } else {
-            console.log(`Message added with ID: ${lastID}`);
-          }
-      });
+      db.addMessage(message);
 
       
       server.clients.forEach((client) => {
