@@ -5,7 +5,7 @@ const db = new sqlite3.Database('./auth.db', sqlite3.OPEN_READWRITE | sqlite3.OP
     else console.log('The database has been successfully created');
 })
 
-db.run('CREATE TABLE IF NOT EXISTS users (id PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)');
+db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)');
 
 function authUsers(id, name){
     const query = 'INSERT INTO users (id,name,email,createdAt) VALUES (NULL,?,?,?)';
