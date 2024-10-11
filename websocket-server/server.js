@@ -1,6 +1,6 @@
 //This is the WebSocket server written in Node.js
 const WebSocket = require('ws');
-const db = require('./db');
+const db = require('./databases/db');
 
 
 const server = new WebSocket.Server({ port: 8080 });

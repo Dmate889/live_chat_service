@@ -32,6 +32,7 @@ function getMessages(callback){
   });
 }
 
+//Exporting the 2 functions, so it can be used in server.js
 module.exports = {
   addMessage,
   getMessages
