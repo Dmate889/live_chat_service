@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3');
 //Declaring the database
 const db = new sqlite3.Database('./chat.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
   if(err) console.log('An error occured during the creation of the database');
-  else console.log('The database has been successfully created');
+  else console.log('The database_msg has been successfully created');
 
 });
 
