@@ -13,7 +13,7 @@ db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, 
 
 async function authUsers(name, password){
     const hashedPassword = await bcrypt.hash(password, 10);
-    const query = 'INSERT INTO users (name, password, createdAt) VALUES (?,?,?)';
+    const query = 'INSERT INTO users (name, password) VALUES (?,?)';
 
     db.run(query,[name, hashedPassword], (err) => {
         if(err) console.log('Could not run the query: '+ query);
@@ -33,7 +33,7 @@ async function getUsers(name, password, callback){
             const token = jwt.sign({name: row.name}, JWT_SECRET, {expiresIn: '5h'});
             callback(null,{success: true, token});
         }
-        else callback(null,{success: false, mesage: 'Invalid username or password'});
+        else callback(null,{success: false, message: 'Invalid username or password'});
     });
 }
 
