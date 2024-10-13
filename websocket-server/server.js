@@ -2,6 +2,7 @@
 const WebSocket = require('ws');
 const db = require('./databases/db');
 const db_auth = require('./databases/db_auth');
+const jwt = require('jsonwebtoken');
 
 
 const server = new WebSocket.Server({ port: 8080 });
@@ -9,8 +10,36 @@ const server = new WebSocket.Server({ port: 8080 });
 const MESSAGE_LIMIT = 5;
 const TIME_WINDOW = 5000;
 
+function verifyToken(token){
+  try{
+    const decoded = jwt.verify(token, db_auth.JWT_SECRET);
+    return decoded;
+  }
+  catch(err){
+    console.log('Token verification failed', err);
+    return null;
+  }
+}
+
+
 //Connecting to WS, and iterating through the messages
-server.on('connection', (ws) => {
+server.on('connection', (ws, req) => {
+
+  const token = new URL(req.url, `http://${req.headers.host}`).searchParams.get('token');
+
+  if (!token) {
+    ws.close(4001, 'No token provided');
+    return;
+  }
+  
+  const user = verifyToken(token); 
+
+  if (!user) {
+    ws.close(4002, 'Invalid token');
+    return;
+  }
+
+  console.log(`${user.name} connected`);
 
   db.getMessages((err, messages) => {
     if(err){
@@ -80,7 +109,7 @@ server.on('connection', (ws) => {
 
 //Disconnect message from WS
   ws.on('close', () => {
-      console.log('Client has disconnected from the server')
+      console.log(`${user.name} disconnected from the server`);
       clearInterval(interval);
   });
 });

@@ -39,6 +39,7 @@ async function getUsers(name, password, callback){
 
 module.exports ={
     authUsers,
-    getUsers
+    getUsers,
+    JWT_SECRET
 }
 
