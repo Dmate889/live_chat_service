@@ -9,6 +9,12 @@ import { Router } from '@angular/router';
 export class LoginPageComponent {
 
 
-  
+  constructor(private router: Router){
+    
+  }
+
+  register(e: any){
+    this.router.navigate(['/registerPage']);
+  }
 
 }
