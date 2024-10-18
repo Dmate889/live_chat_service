@@ -9,10 +9,14 @@ export class ChatService {
 
 //Async two-way WS connection
   private socket$: WebSocketSubject<any>;
+  private token: any;
 
   constructor(private router: Router) {
+
+    this.token = localStorage.getItem('jwtToken');
+
     this.socket$ = new WebSocketSubject({
-      url: 'ws://localhost:8080',
+      url: `ws://localhost:8080?token=${this.token}`,
       deserializer: msg => msg.data,
       serializer: msg => JSON.stringify(msg)
     });
