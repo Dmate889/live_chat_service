@@ -3,8 +3,10 @@ const WebSocket = require('ws');
 const db = require('./databases/db');
 const db_auth = require('./databases/db_auth');
 const jwt = require('jsonwebtoken');
+const express = require('express');
+const cors = require('cors');
 
-
+const app = express();
 const server = new WebSocket.Server({ port: 8080 });
 
 const MESSAGE_LIMIT = 5;
@@ -23,7 +25,7 @@ function verifyToken(token){
 
 
 //Connecting to WS, and iterating through the messages
-server.on('connection', (ws, req) => {
+server.on('connection', (ws, req) => {  
 
   const token = new URL(req.url, `http://${req.headers.host}`).searchParams.get('token');
 
@@ -116,3 +118,43 @@ server.on('connection', (ws, req) => {
 
 
 console.log('Websocket server runs on port 8080');
+
+
+//Registering users
+
+app.use(express.json()); 
+app.use(cors()); 
+
+//API endpoint for the register service and the front-end
+app.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        await db_auth.authUsers(username, password);
+        res.status(200).send({ message: 'User registered successfully' });
+    } catch (err) {
+        res.status(500).send({ message: 'Error registering user', error: err });
+    }
+});
+
+//Logging in users
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+  try {
+      db_auth.getUsers(username, password, (err, result) => {
+          if (err) {
+              console.error('Error during user authentication:', err); 
+              res.status(500).send({ message: 'Unsuccessful login attempt' });
+          } else if (result.success) {
+              res.status(200).json({ message: 'Login successful', token: result.token });
+          } else {
+              res.status(401).json({ message: result.message });
+          }
+      });
+  } catch (err) {
+      res.status(500).send({ message: 'Internal server error' });
+  }
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
+});

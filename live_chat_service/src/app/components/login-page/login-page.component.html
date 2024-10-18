@@ -1,6 +1,6 @@
 <div class="form_s">
     <h2>Login to the chat</h2>
-    <form>
+    <form (ngSubmit)="loginUser($event)">
         <label for="usernmame" >Username</label><br>
         <input autocomplete="off" type="text" name="username" id="username"><br>
         <label for="password">Password</label><br>

@@ -13,7 +13,7 @@ export class DisconnectedComponent {
   }
 
   backtoChat(e: any){
-    this.router.navigate(['/chat']);
+    this.router.navigate(['/loginPage']);
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from '../../chat.service'; 
+import { ChatService } from '../../services/chat.service'; 
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class ChatComponent implements OnInit {
 
   
 
-  constructor(private chatService: ChatService) {}
+  constructor(private chatService: ChatService, private router: Router) {}
 
   ngOnInit(){
     //Getting messages from the WS server, if the message string, it can be pushed to the array, of it is Blob, it will be converted by text(), which gives back a Promise, and with then() we wait for that, then we push it to the array.
@@ -52,4 +53,13 @@ export class ChatComponent implements OnInit {
     //Setting the message timestamp to date.now() again
     this.lastMessageTimestamp = currentTime;
   }
+
+  disconnectUser(e: any){
+    localStorage.removeItem('jwtToken');
+    this.chatService.closeConnection();
+
+    this.router.navigate(['/loginPage']);
+  }
 }
+
+

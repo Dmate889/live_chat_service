@@ -33,7 +33,7 @@ async function getUsers(name, password, callback){
             const token = jwt.sign({name: row.name}, JWT_SECRET, {expiresIn: '5h'});
             callback(null,{success: true, token});
         }
-        else callback(null,{success: false, message: 'Invalid username or password'});
+         else callback(null,{success: false, message: 'Invalid username or password'});
     });
 }
 

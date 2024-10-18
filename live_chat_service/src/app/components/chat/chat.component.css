@@ -1,10 +1,10 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 95vh;
+    height: 85vh;
     justify-content: space-between;
     padding: 10px;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; 
   }
   
   .message-container {
@@ -56,4 +56,22 @@
     color: black; 
     border: 2px solid #4CAF50; 
   }
+
+  .disconnect{
+    background-color: #d60a0a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: monospace;
+  }
+
+ .disconnect:hover {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #c4640a; 
+ }
   

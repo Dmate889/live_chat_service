@@ -7,6 +7,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import { FormsModule } from '@angular/forms';
 import { DisconnectedComponent } from './components/disconnected/disconnected.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { RegisterPageComponent } from './components/register-page/register-page.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
@@ -17,11 +19,13 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     ChatComponent,
     DisconnectedComponent,
     LoginPageComponent,
+    RegisterPageComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

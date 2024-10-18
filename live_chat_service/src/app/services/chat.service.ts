@@ -38,6 +38,12 @@ export class ChatService {
     this.router.navigate(['/disconnected']);
   }
 
+   closeConnection(){
+    if(this.socket$){
+      this.socket$.complete();
+    }
+  }
+
 //Getting the messages and converting those as Observables for socket$ WS subject
   getMessages() {
     return this.socket$.asObservable();

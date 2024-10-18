@@ -1,9 +1,9 @@
 <div class="form_s">
     <h2 class="instructions">Register to the chat!</h2>
     <p class="instructions">Please enter your username and password below to register.</p>
-    <form>    
+    <form (ngSubmit)="getUserDetails($event)">    
         <input type="text" name="username" placeholder="Username" id="username" autocomplete="off"><br>
-        <input type="text" name="password" placeholder="Password" id="password">
+        <input type="password" name="password" placeholder="Password" id="password"><br>
+        <button type="submit" class="button">Register</button>
     </form>
-    <button type="submit" class="button">Register</button>
 </div>
