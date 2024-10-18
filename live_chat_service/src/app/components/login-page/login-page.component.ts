@@ -21,24 +21,21 @@ export class LoginPageComponent {
 
   loginUser(e:any){
     e.preventDefault();
-    const userName = e.target.elements.username.value;
-    const passWord = e.target.elements.password.value;
+    const userName = e.target.elements.username.value.trim();
+    const passWord = e.target.elements.password.value.trim();
 
-    this.loginservice.loginUsers(userName,passWord).subscribe(
-      response => {
-        console.log('User logged in successfully', response);
-        
-        const token = response.token;
-        localStorage.setItem('jwtToken', token);
-
-        this.router.navigate(['/chat']);
-      },
-      error => {
-        console.error('Error registering user', error);
-      }
-    )
-    
-    
+      this.loginservice.loginUsers(userName,passWord).subscribe(
+        response => {
+          console.log('User logged in successfully', response);
+          
+          const token = response.token;
+          localStorage.setItem('jwtToken', token);
+  
+          this.router.navigate(['/chat']);
+        },
+        error => {
+          if(error.status === 401) alert('Invalid username or password!');
+        }
+      )    
   }
-
 }

@@ -35,6 +35,8 @@ export class ChatService {
 
   private handleDisconnect() {
     console.log('WebSocket connection closed, navigating to disconnected page.');
+    localStorage.removeItem('jwtToken');
+
     this.router.navigate(['/disconnected']);
   }
 

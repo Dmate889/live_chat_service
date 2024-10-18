@@ -57,8 +57,6 @@ export class ChatComponent implements OnInit {
   disconnectUser(e: any){
     localStorage.removeItem('jwtToken');
     this.chatService.closeConnection();
-
-    this.router.navigate(['/loginPage']);
   }
 }
 

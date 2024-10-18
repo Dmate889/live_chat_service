@@ -15,20 +15,22 @@ export class RegisterPageComponent {
 
   getUserDetails(e:any){
     e.preventDefault();
-    const userName = e.target.elements.username.value;
-    const passWord = e.target.elements.password.value;
+    const userName = e.target.elements.username.value.trim();
+    const passWord = e.target.elements.password.value.trim();
 
-    this.authService.registerUser(userName,passWord).subscribe(
-      response => {
-        console.log('User registered successfully', response);
-        this.router.navigate(['/loginPage']);
-      },
-      error => {
-        console.error('Error registering user', error);
-      }
-    )
-    
-    
+    if(userName === '' || passWord === ''){
+      alert('The usernam or password format was incorrect!');
+    }
+    else{
+      this.authService.registerUser(userName,passWord).subscribe(
+        response => {
+          console.log('User registered successfully', response);
+          this.router.navigate(['/loginPage']);
+        },
+        error => {
+          console.error('Error registering user', error);
+        }
+      )
+    }    
   }
-
 }
