@@ -13,6 +13,10 @@ export class RegisterPageComponent {
 
   }
 
+  navigateBack($event: any){
+    this.router.navigate(['/loginPage']);
+  }
+
   getUserDetails(e:any){
     e.preventDefault();
     const userName = e.target.elements.username.value.trim();
@@ -26,10 +30,14 @@ export class RegisterPageComponent {
         response => {
           console.log('User registered successfully', response);
           alert(`You have registered successfully as ${userName}`);
+
           this.router.navigate(['/loginPage']);
         },
         error => {
-          console.error('Error registering user', error);
+          if(error.status === 500){
+            alert('Error: Registration failed, user already exist');
+          }
+          else console.error('Unknown error occured', error);
         }
       )
     }    

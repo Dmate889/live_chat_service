@@ -126,14 +126,16 @@ app.use(express.json());
 app.use(cors()); 
 
 //API endpoint for the register service and the front-end
-app.post('/register', async (req, res) => {
-    const { username, password } = req.body;
-    try {
-        await db_auth.authUsers(username, password);
-        res.status(200).send({ message: 'User registered successfully' });
-    } catch (err) {
-        res.status(500).send({ message: 'Error registering user', error: err });
-    }
+app.post('/register', (req, res) => {
+  const { name, password } = req.body;
+  
+  dbAuth.authUsers(name, password, (err) => {
+      if (err) {
+          console.log('Error during registration:', err);
+          return res.status(500).json({ message: 'Registration error: User already exist or DB issue.' });
+      }
+      res.status(200).json({ message: 'User registered successfully' });
+  });
 });
 
 //Logging in users
