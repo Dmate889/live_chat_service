@@ -8,7 +8,8 @@ const db = new sqlite3.Database('./chat.db', sqlite3.OPEN_READWRITE | sqlite3.OP
 });
 
 //Create the table
-db.run('CREATE TABLE IF NOT EXISTS messages (id, INTEGER PRIMARY KEY, content TEXT, sender TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)');
+db.run('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)');
+db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)');
 
 //Inserting into the table
 function addMessage(message){
@@ -21,7 +22,7 @@ function addMessage(message){
 
 //Running the query on all rows of the table
 function getMessages(callback){
-  const query = 'SELECT content, timestamp, sender FROM messages ORDER BY timestamp ASC';
+  const query = 'SELECT content, timestamp FROM messages ORDER BY timestamp ASC';
 
   db.all(query,[],(err, rows) => {
     if(err){
