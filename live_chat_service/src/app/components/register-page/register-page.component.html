@@ -4,9 +4,9 @@
     <form (ngSubmit)="getUserDetails($event)">    
         <input type="text" name="username" placeholder="Username" id="username" autocomplete="off"><br>
         <input type="text" name="password" placeholder="Password" id="password"><br>
+        <div class="buttons">
+            <button type="submit">Register</button>
+            <button type="button" (click)="navigateBack($event)" >Back to Chat</button>
+        </div>
     </form>
-    <div class="buttons">
-        <button type="submit">Register</button>
-        <button type="button" (click)="navigateBack($event)" >Back to Chat</button>
-    </div>
 </div>
