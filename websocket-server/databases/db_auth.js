@@ -12,11 +12,11 @@ const db = new sqlite3.Database('./auth.db', sqlite3.OPEN_READWRITE | sqlite3.OP
 db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)');
 
 //Inserting new users into the DB
-async function authUsers(name, password, callback){    
+async function authUsers(username, password, callback){  
     const hashedPassword = await bcrypt.hash(password, 10);
     const query = 'INSERT INTO users (name, password) VALUES (?,?)';
     
-    db.run(query,[name, hashedPassword], (err) => {
+    db.run(query,[username, hashedPassword], (err) => {
         if(err) {
             console.log('Could not run the query: '+ query);
             callback(err);   

@@ -127,9 +127,9 @@ app.use(cors());
 
 //API endpoint for the register service and the front-end
 app.post('/register', (req, res) => {
-  const { name, password } = req.body;
+  const { username, password } = req.body;
   
-  dbAuth.authUsers(name, password, (err) => {
+  db_auth.authUsers(username, password, (err) => {
       if (err) {
           console.log('Error during registration:', err);
           return res.status(500).json({ message: 'Registration error: User already exist or DB issue.' });
