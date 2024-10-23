@@ -1,7 +1,7 @@
 //This is the WebSocket server written in Node.js
 const WebSocket = require('ws');
 const db = require('./databases/db');
-const db_auth = require('./databases/db_auth');
+//const db_auth = require('./databases/db_auth');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const cors = require('cors');
@@ -14,7 +14,7 @@ const TIME_WINDOW = 5000;
 
 function verifyToken(token){
   try{
-    const decoded = jwt.verify(token, db_auth.JWT_SECRET);
+    const decoded = jwt.verify(token, db.JWT_SECRET);
     return decoded;
   }
   catch(err){
@@ -129,7 +129,7 @@ app.use(cors());
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
   
-  db_auth.authUsers(username, password, (err) => {
+  db.authUsers(username, password, (err) => {
       if (err) {
           console.log('Error during registration:', err);
           return res.status(500).json({ message: 'Registration error: User already exist or DB issue.' });
@@ -142,7 +142,7 @@ app.post('/register', (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   try {
-      db_auth.getUsers(username, password, (err, result) => {
+      db.getUsers(username, password, (err, result) => {
           if (err) {
               console.error('Error during user authentication:', err); 
               res.status(500).send({ message: 'Unsuccessful login attempt' });
