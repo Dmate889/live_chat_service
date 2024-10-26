@@ -1,7 +1,6 @@
 //This is the WebSocket server written in Node.js
 const WebSocket = require('ws');
 const db = require('./databases/db');
-//const db_auth = require('./databases/db_auth');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const cors = require('cors');
@@ -94,9 +93,9 @@ server.on('connection', (ws, req) => {
         return;
       }
 
-      console.log(`New message received: ${message}`);
+      console.log(`New message received: ${message} from Id: ${user.id}`);
 
-      db.addMessage(message);
+      db.addMessage(message,user.id);
 
       
       server.clients.forEach((client) => {
@@ -128,14 +127,18 @@ app.use(cors());
 //API endpoint for the register service and the front-end
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
-  
-  db.authUsers(username, password, (err) => {
-      if (err) {
-          console.log('Error during registration:', err);
-          return res.status(500).json({ message: 'Registration error: User already exist or DB issue.' });
-      }
-      res.status(200).json({ message: 'User registered successfully' });
-  });
+  try {
+    db.authUsers(username, password, (err) => {
+        if (err) {
+            console.log('Error during registration:', err);
+            return res.status(500).json({ message: 'Registration error: User already exist or DB issue.' });
+        }
+        res.status(200).json({ message: 'User registered successfully' });
+    });
+  }
+  catch{
+    res.status(500).send({message: 'Internal server error'});
+  }
 });
 
 //Logging in users

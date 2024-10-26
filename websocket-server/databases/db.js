@@ -34,14 +34,14 @@ async function authUsers(username, password, callback){
 
 //Getting users from the DB
 async function getUsers(name, password, callback){
-    const query = 'SELECT name, password FROM users WHERE name = ?';
+    const query = 'SELECT id, name, password FROM users WHERE name = ?';
         db.get(query,[name], async (err, row) => {
             if(err){
                 console.log('Could not fetch user: ' + err)
                 return callback(err);
             }
             if(row && await bcrypt.compare(password, row.password)){
-                const token = jwt.sign({name: row.name}, JWT_SECRET, {expiresIn: '5h'});
+                const token = jwt.sign({id: row.id, name: row.name}, JWT_SECRET, {expiresIn: '5h'});
                 callback(null,{success: true, token});
             }
              else callback(null,{success: false, message: 'Invalid username or password'});
@@ -51,10 +51,10 @@ async function getUsers(name, password, callback){
 }
 
 //Inserting into the table
-function addMessage(message){
-  const query = 'INSERT INTO messages (content) VALUES (?)';
+function addMessage(message, user_id){
+  const query = 'INSERT INTO messages (content, user_id) VALUES (?,?)';
 
-  db.run(query, [message], (err) => {
+  db.run(query, [message, user_id], (err) => {
     if(err) console.log('An error has occured when you tried to run the query: '+ query + err)
   });
 }
