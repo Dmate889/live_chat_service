@@ -50,8 +50,7 @@ server.on('connection', (ws, req) => {
      messages.forEach((message) => {
       ws.send(JSON.stringify({
 
-        content: message.content,
-        timestamp: message.timestamp,
+        content: Buffer.isBuffer(message.content) ? message.content.toString(): message.content,
         sender: message.name
 
       }));
@@ -82,6 +81,9 @@ server.on('connection', (ws, req) => {
   //Sending the message to all clients + spam protection. If the message limit(5) has been exceeded, the client will be disconnected
     ws.on('message', (message) => {
 
+      let parsedMessage = JSON.parse(message);
+      messageContent = typeof parsedMessage === 'string' ? JSON.parse(parsedMessage): parsedMessage;
+
       const currentTime = Date.now();
       if(currentTime - ws.startTime < TIME_WINDOW){
         ws.messageCount++;
@@ -99,20 +101,27 @@ server.on('connection', (ws, req) => {
         return;
       }
 
-      console.log(`New message received: ${message} from Id: ${user.id}`);
+      console.log(`New message received: ${messageContent.content} from Id: ${user.id}`);
 
-      db.addMessage(message,user.id);
+      const messageObject = {
+        content: messageContent.content,      
+        sender: user.name          
+    };
+
+      db.addMessage(messageObject.content,user.id);
 
       
       server.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
-          client.send(message);
-        }
-      });
+          client.send(JSON.stringify({
+            content: Buffer.isBuffer(messageObject.content) ? messageObject.content.toString(): messageObject.content,
+            sender: messageObject.sender
+          }))     
+    }});
   });
 
   
-  ws.send('You have connected to the server');
+  //ws.send('You have connected to the server');
 
 //Disconnect message from WS
   ws.on('close', () => {

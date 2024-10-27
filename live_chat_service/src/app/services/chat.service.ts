@@ -17,7 +17,7 @@ export class ChatService {
 
     this.socket$ = new WebSocketSubject({
       url: `ws://localhost:8080?token=${this.token}`,
-      deserializer: msg => msg.data,
+      deserializer: msg => JSON.parse(msg.data),
       serializer: msg => JSON.stringify(msg)
     });
 
