@@ -47,9 +47,15 @@ server.on('connection', (ws, req) => {
       console.log('Error fetching messages:', err)
     }
     else{
-      messages.forEach((message) => {
-        ws.send(message.content)
-      });
+     messages.forEach((message) => {
+      ws.send(JSON.stringify({
+
+        content: message.content,
+        timestamp: message.timestamp,
+        sender: message.name
+
+      }));
+     }) 
     }
   })
   console.log('New client has connected to the server');

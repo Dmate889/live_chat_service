@@ -48,7 +48,6 @@ export class ChatComponent implements OnInit {
     }
 
     this.chatService.sendMessage(this.newMessage);
-    this.newMessage = ''; 
     
     //Setting the message timestamp to date.now() again
     this.lastMessageTimestamp = currentTime;
