@@ -4,8 +4,15 @@ const db = require('./databases/db');
 const jwt = require('jsonwebtoken');
 const express = require('express');
 const cors = require('cors');
+const authRoutes = require('./authRoutes');
 
 const app = express();
+
+//Middlewares & routes
+app.use(express.json()); 
+app.use(cors()); 
+app.use('/auth', authRoutes);
+
 const server = new WebSocket.Server({ port: 8080 });
 
 const MESSAGE_LIMIT = 5;
@@ -114,14 +121,14 @@ server.on('connection', (ws, req) => {
       server.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({
+
             content: Buffer.isBuffer(messageObject.content) ? messageObject.content.toString(): messageObject.content,
             sender: messageObject.sender
+
           }))     
     }});
   });
 
-  
-  //ws.send('You have connected to the server');
 
 //Disconnect message from WS
   ws.on('close', () => {
@@ -133,47 +140,6 @@ server.on('connection', (ws, req) => {
 
 console.log('Websocket server runs on port 8080');
 
-
-//Registering users
-
-app.use(express.json()); 
-app.use(cors()); 
-
-//API endpoint for the register service and the front-end
-app.post('/register', (req, res) => {
-  const { username, password } = req.body;
-  try {
-    db.authUsers(username, password, (err) => {
-        if (err) {
-            console.log('Error during registration:', err);
-            return res.status(500).json({ message: 'Registration error: User already exist or DB issue.' });
-        }
-        res.status(200).json({ message: 'User registered successfully' });
-    });
-  }
-  catch{
-    res.status(500).send({message: 'Internal server error'});
-  }
-});
-
-//Logging in users
-app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  try {
-      db.getUsers(username, password, (err, result) => {
-          if (err) {
-              console.error('Error during user authentication:', err); 
-              res.status(500).send({ message: 'Unsuccessful login attempt' });
-          } else if (result.success) {
-              res.status(200).json({ message: 'Login successful', token: result.token });
-          } else {
-              res.status(401).json({ message: result.message });
-          }
-      });
-  } catch (err) {
-      res.status(500).send({ message: 'Internal server error' });
-  }
-});
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
