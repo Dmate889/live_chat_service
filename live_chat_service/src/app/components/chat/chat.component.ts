@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class ChatComponent implements OnInit {
 
-//For now, the messages are stored in the messages array
-  messages: string[] = []; 
+//The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
+  messages: {content: string, sender: string} [] = []; 
   newMessage: string = ''; 
   lastMessageTimestamp: number = 0;
   cooldownTime: number = 300;
@@ -21,16 +21,14 @@ export class ChatComponent implements OnInit {
   constructor(private chatService: ChatService, private router: Router) {}
 
   ngOnInit(){
-    //Getting messages from the WS server, if the message string, it can be pushed to the array, of it is Blob, it will be converted by text(), which gives back a Promise, and with then() we wait for that, then we push it to the array.
-        this.chatService.getMessages().subscribe((message: any) => {
-          if(typeof message === 'string'){
-            this.messages.push(message);
-          }
-          else if(message instanceof Blob){
-            message.text().then(text => this.messages.push(text));
-          }
-        })
-      }
+    this.chatService.getMessages().subscribe((message: any) => {
+      
+      this.messages.push({
+        content: typeof message.content === 'object' ? JSON.stringify(message.content) : message.content,
+        sender: message.sender
+      });
+    });
+  }
 
 //The messages that we send to the WS server 
   sendMessage(event: Event) {
@@ -46,9 +44,11 @@ export class ChatComponent implements OnInit {
       alert("You can't send empty messages.");  
       return;
     }
+      const message = {
+        content: this.newMessage
+      }
 
-    this.chatService.sendMessage(this.newMessage);
-    
+    this.chatService.sendMessage(JSON.stringify(message));
     //Setting the message timestamp to date.now() again
     this.lastMessageTimestamp = currentTime;
   }
