@@ -13,10 +13,11 @@ app.use(express.json());
 app.use(cors()); 
 app.use('/auth', authRoutes);
 
-const server = new WebSocket.Server({ port: 8080 });
+app.listen(3000, () => {
+  console.log('Express server is running on port 3000');
+});
 
-const MESSAGE_LIMIT = 5;
-const TIME_WINDOW = 5000;
+const server = new WebSocket.Server({ port: 8080 });
 
 function verifyToken(token){
   try{
@@ -49,6 +50,7 @@ server.on('connection', (ws, req) => {
 
   console.log(`${user.name} connected`);
 
+  //Making the messages visible from the DB on the UI
   db.getMessages((err, messages) => {
     if(err){
       console.log('Error fetching messages:', err)
@@ -64,26 +66,9 @@ server.on('connection', (ws, req) => {
      }) 
     }
   })
-  console.log('New client has connected to the server');
-  ws.isAlive = true;
-
-//WS healthcheck
-    ws.on('pong', () => {
-      ws.isAlive = true;
-    });
 
     ws.messageCount = 0;
     ws.startTime = Date.now();
-
-
-    const interval = setInterval(() => {
-      server.clients.forEach((ws) => {
-          if(!ws.isAlive) return ws.terminate();
-
-          ws.isAlive = false;
-          ws.ping();
-      });
-    }, 30000);
     
   //Sending the message to all clients + spam protection. If the message limit(5) has been exceeded, the client will be disconnected
     ws.on('message', (message) => {
@@ -92,16 +77,14 @@ server.on('connection', (ws, req) => {
       messageContent = typeof parsedMessage === 'string' ? JSON.parse(parsedMessage): parsedMessage;
 
       const currentTime = Date.now();
-      if(currentTime - ws.startTime < TIME_WINDOW){
-        ws.messageCount++;
-      } 
+      if(currentTime - ws.startTime < 5000) ws.messageCount++
       else
       {
         ws.messageCount = 1;
         ws.startTime = currentTime;
       }
 
-      if(ws.messageCount > MESSAGE_LIMIT)
+      if(ws.messageCount > 5)
       {
         console.log('Client disconnected due to spamming');
         ws.close();
@@ -110,21 +93,15 @@ server.on('connection', (ws, req) => {
 
       console.log(`New message received: ${messageContent.content} from Id: ${user.id}`);
 
-      const messageObject = {
-        content: messageContent.content,      
-        sender: user.name          
-    };
+      //Inserting the message into the DB, and sending it out to all the clients
+      db.addMessage(messageContent.content,user.id);
 
-      db.addMessage(messageObject.content,user.id);
-
-      
       server.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({
 
-            content: Buffer.isBuffer(messageObject.content) ? messageObject.content.toString(): messageObject.content,
-            sender: messageObject.sender
-
+            content: Buffer.isBuffer(messageContent.content) ? messageContent.content.toString(): messageContent.content,
+            sender: user.name
           }))     
     }});
   });
@@ -133,14 +110,10 @@ server.on('connection', (ws, req) => {
 //Disconnect message from WS
   ws.on('close', () => {
       console.log(`${user.name} disconnected from the server`);
-      clearInterval(interval);
   });
 });
 
 
-console.log('Websocket server runs on port 8080');
+console.log('Websocket server is running on port 8080');
 
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
-});
