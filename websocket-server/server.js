@@ -60,7 +60,8 @@ server.on('connection', (ws, req) => {
       ws.send(JSON.stringify({
 
         content: Buffer.isBuffer(message.content) ? message.content.toString(): message.content,
-        sender: message.name
+        sender: message.name,
+        time: message.time
 
       }));
      }) 
@@ -75,6 +76,7 @@ server.on('connection', (ws, req) => {
 
       let parsedMessage = JSON.parse(message);
       messageContent = typeof parsedMessage === 'string' ? JSON.parse(parsedMessage): parsedMessage;
+      console.log('The messageContent value: '+ JSON.stringify(messageContent));
 
       const currentTime = Date.now();
       if(currentTime - ws.startTime < 5000) ws.messageCount++
@@ -101,7 +103,8 @@ server.on('connection', (ws, req) => {
           client.send(JSON.stringify({
 
             content: Buffer.isBuffer(messageContent.content) ? messageContent.content.toString(): messageContent.content,
-            sender: user.name
+            sender: user.name,
+            time: messageContent.timestamp
           }))     
     }});
   });

@@ -32,6 +32,7 @@ async function authUsers(username, password, callback){
 }
 
 
+
 //Getting users from the DB
 async function getUsers(name, password, callback){
     const query = 'SELECT id, name, password FROM users WHERE name = ?';
@@ -61,7 +62,7 @@ function addMessage(message, user_id){
 
 //Running the query on all rows of the table
 function getMessages(callback){
-  const query = 'SELECT messages.content, users.name FROM messages INNER JOIN users ON messages.user_id = users.id ORDER BY timestamp ASC';
+  const query = 'SELECT messages.content, messages.timestamp, users.name FROM messages INNER JOIN users ON messages.user_id = users.id ORDER BY timestamp ASC';
 
   db.all(query,[],(err, rows) => {
     if(err){
