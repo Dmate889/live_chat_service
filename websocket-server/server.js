@@ -58,11 +58,8 @@ server.on('connection', (ws, req) => {
     else{
      messages.forEach((message) => {
       ws.send(JSON.stringify({
-
         content: Buffer.isBuffer(message.content) ? message.content.toString(): message.content,
-        sender: message.name,
-        time: message.time
-
+        sender: message.name
       }));
      }) 
     }
@@ -76,7 +73,6 @@ server.on('connection', (ws, req) => {
 
       let parsedMessage = JSON.parse(message);
       messageContent = typeof parsedMessage === 'string' ? JSON.parse(parsedMessage): parsedMessage;
-      console.log('The messageContent value: '+ JSON.stringify(messageContent));
 
       const currentTime = Date.now();
       if(currentTime - ws.startTime < 5000) ws.messageCount++
@@ -104,7 +100,6 @@ server.on('connection', (ws, req) => {
 
             content: Buffer.isBuffer(messageContent.content) ? messageContent.content.toString(): messageContent.content,
             sender: user.name,
-            time: messageContent.timestamp
           }))     
     }});
   });
