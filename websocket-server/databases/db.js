@@ -52,24 +52,26 @@ async function getUsers(name, password, callback){
 }
 
 //Inserting into the table
-function addMessage(message, user_id){
-  const query = 'INSERT INTO messages (content, user_id) VALUES (?,?)';
+function addMessage(message, user_id) {
+  const query = 'INSERT INTO messages (content, user_id) VALUES (?, ?)';
 
-  db.run(query, [message, user_id], (err) => {
-    if(err) console.log('An error has occured when you tried to run the query: '+ query + err)
+  db.run(query, [message, user_id], function (err) {
+    if (err)  console.log('An error occurred while running the query: ' + query + err); 
   });
 }
 
 //Running the query on all rows of the table
 function getMessages(callback){
-  const query = 'SELECT messages.content, users.name FROM messages INNER JOIN users ON messages.user_id = users.id ORDER BY timestamp ASC';
+  const query = 'SELECT messages.content, messages.timestamp, users.name FROM messages INNER JOIN users ON messages.user_id = users.id ORDER BY timestamp ASC';
 
   db.all(query,[],(err, rows) => {
     if(err){
       console.log('An error has occured when you tried to run the query: '+ query + err)
       return callback(err)
     } 
-    else callback(null, rows);
+    else {
+      callback(null, rows);
+    } 
   });
 }
 

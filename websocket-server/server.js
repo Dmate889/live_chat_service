@@ -52,6 +52,8 @@ server.on('connection', (ws, req) => {
 
   //Making the messages visible from the DB on the UI
   db.getMessages((err, messages) => {
+    console.log('The object received from the DB: '+ JSON.stringify(messages));
+
     if(err){
       console.log('Error fetching messages:', err)
     }
@@ -59,7 +61,8 @@ server.on('connection', (ws, req) => {
      messages.forEach((message) => {
       ws.send(JSON.stringify({
         content: Buffer.isBuffer(message.content) ? message.content.toString(): message.content,
-        sender: message.name
+        sender: message.name,
+        timestamp: message.timestamp
       }));
      }) 
     }
@@ -72,7 +75,9 @@ server.on('connection', (ws, req) => {
     ws.on('message', (message) => {
 
       let parsedMessage = JSON.parse(message);
+      console.log('The parsedMessage is: '+ JSON.stringify(parsedMessage));
       messageContent = typeof parsedMessage === 'string' ? JSON.parse(parsedMessage): parsedMessage;
+      console.log('The messageContent is: '+ JSON.stringify(messageContent));
 
       const currentTime = Date.now();
       if(currentTime - ws.startTime < 5000) ws.messageCount++
@@ -97,9 +102,9 @@ server.on('connection', (ws, req) => {
       server.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           client.send(JSON.stringify({
-
             content: Buffer.isBuffer(messageContent.content) ? messageContent.content.toString(): messageContent.content,
             sender: user.name,
+            timestamp: messageContent.timestamp
           }))     
     }});
   });
