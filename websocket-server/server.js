@@ -75,9 +75,7 @@ server.on('connection', (ws, req) => {
     ws.on('message', (message) => {
 
       let parsedMessage = JSON.parse(message);
-      console.log('The parsedMessage is: '+ JSON.stringify(parsedMessage));
       messageContent = typeof parsedMessage === 'string' ? JSON.parse(parsedMessage): parsedMessage;
-      console.log('The messageContent is: '+ JSON.stringify(messageContent));
 
       const currentTime = Date.now();
       if(currentTime - ws.startTime < 5000) ws.messageCount++
