@@ -52,7 +52,6 @@ server.on('connection', (ws, req) => {
 
   //Making the messages visible from the DB on the UI
   db.getMessages((err, messages) => {
-    console.log('The object received from the DB: '+ JSON.stringify(messages));
 
     if(err){
       console.log('Error fetching messages:', err)

@@ -11,7 +11,7 @@ const db = new sqlite3.Database('./chat.db', sqlite3.OPEN_READWRITE | sqlite3.OP
 });
 
 //Create the tables
-db.run('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP, user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(id))');
+db.run('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT, timestamp DATETIME, user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(id))');
 db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP)');
 
 //Inserting new users into the DB
@@ -53,9 +53,10 @@ async function getUsers(name, password, callback){
 
 //Inserting into the table
 function addMessage(message, user_id) {
-  const query = 'INSERT INTO messages (content, user_id) VALUES (?, ?)';
+  const localTimestamp = new Date().toISOString();
+  const query = 'INSERT INTO messages (content, user_id, timestamp) VALUES (?, ?, ?)';
 
-  db.run(query, [message, user_id], function (err) {
+  db.run(query, [message, user_id, localTimestamp], function (err) {
     if (err)  console.log('An error occurred while running the query: ' + query + err); 
   });
 }
