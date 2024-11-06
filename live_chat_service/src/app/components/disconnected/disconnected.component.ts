@@ -13,7 +13,9 @@ export class DisconnectedComponent {
   }
 
   backtoChat(e: any){
-    this.router.navigate(['/loginPage']);
+    this.router.navigate(['/loginPage']).then(() => {
+      window.location.reload();
+    });
   }
 
 }

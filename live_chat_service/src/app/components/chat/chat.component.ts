@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service'; 
 import { Router } from '@angular/router';
+import { timestamp } from 'rxjs';
 
 
 @Component({
@@ -11,10 +12,12 @@ import { Router } from '@angular/router';
 export class ChatComponent implements OnInit {
 
 //The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
-  messages: {content: string, sender: string} [] = []; 
+  messages: {content: string, sender: string, timestamp: Date} [] = []; 
   newMessage: string = ''; 
   lastMessageTimestamp: number = 0;
   cooldownTime: number = 300;
+  showSmileyDropdown = false;
+
 
   
 
@@ -25,9 +28,21 @@ export class ChatComponent implements OnInit {
       
       this.messages.push({
         content: typeof message.content === 'object' ? JSON.stringify(message.content) : message.content,
-        sender: message.sender
+        sender: message.sender,
+        timestamp: message.timestamp
       });
+      this.newMessage = "";
     });
+  }
+
+  toggleSmileyDropdown() {
+    this.showSmileyDropdown = !this.showSmileyDropdown;
+  }
+
+
+  addSmiley(smiley: string) {
+    this.newMessage = (this.newMessage || '') + smiley;
+    this.showSmileyDropdown = false; // Menüt bezárjuk a választás után
   }
 
 //The messages that we send to the WS server 
@@ -45,11 +60,11 @@ export class ChatComponent implements OnInit {
       return;
     }
       const message = {
-        content: this.newMessage
+        content: this.newMessage,
+        timestamp: currentTime
       }
 
     this.chatService.sendMessage(JSON.stringify(message));
-    //Setting the message timestamp to date.now() again
     this.lastMessageTimestamp = currentTime;
   }
 
