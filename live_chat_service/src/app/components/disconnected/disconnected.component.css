@@ -37,3 +37,32 @@
   p{
     font-family: monospace;
   }
+
+  @media (max-width: 768px){
+    .disconnected-container{
+      max-width: 100%;
+      height: 100vh;
+      border-radius: 0;
+    }
+
+    .button {
+      display: block; 
+      max-width: 80%; 
+      margin: 20px auto 0 auto; 
+      font-size: 1em; 
+      position: relative;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .disconnected-container {
+      padding: 10px; 
+    }
+  
+    .button {
+      width: 100%; 
+      font-size: 0.9em; 
+      margin: 10px auto 0 auto; 
+      display: block;
+    }
+  }
