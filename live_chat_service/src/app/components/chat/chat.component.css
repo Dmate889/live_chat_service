@@ -142,7 +142,7 @@
 }
 
 .disconnect:hover {
-  background-color: #e53935;
+  background-color: red
 }
 
 /* Responsiveness for tablets and bigger screen phones */

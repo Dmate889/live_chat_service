@@ -58,4 +58,21 @@
     gap: 10px;
   }
 
+  @media (max-width: 480px) and (orientation: landscape),
+         (max-width: 480px) and (orientation: portrait) {
+
+      .form_s{
+        max-width: 80%;
+        height: 100vh;
+      }
+      .instructions {
+        font-family: monospace;
+        text-align: justify; 
+        line-height: 1.5; 
+        max-width: 400px; 
+        padding: 10px 0; 
+    }
+      
+    }
+
 
