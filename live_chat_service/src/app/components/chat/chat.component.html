@@ -1,5 +1,5 @@
 <div class="chat-container">
-    <div class="message-container">
+    <div class="message-container" #messageContainer>
       <div *ngFor="let message of messages" class="message">
         <div class="message-sender">{{ message.sender }}</div>
         <div class="message-content">{{ message.content }}</div>

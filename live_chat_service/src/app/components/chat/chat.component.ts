@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service'; 
 import { Router } from '@angular/router';
+import { ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+
 
 
 
@@ -9,7 +11,8 @@ import { Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
+  @ViewChild('messageContainer') private messageContainer!: ElementRef;
 
 //The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
   messages: {content: string, sender: string, timestamp: Date} [] = []; 
@@ -18,8 +21,6 @@ export class ChatComponent implements OnInit {
   cooldownTime: number = 300;
   showSmileyDropdown = false;
 
-
-  
 
   constructor(private chatService: ChatService, private router: Router) {}
 
@@ -35,6 +36,10 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
   toggleSmileyDropdown() {
     this.showSmileyDropdown = !this.showSmileyDropdown;
   }
@@ -42,7 +47,7 @@ export class ChatComponent implements OnInit {
 
   addSmiley(smiley: string) {
     this.newMessage = (this.newMessage || '') + smiley;
-    this.showSmileyDropdown = false; // Menüt bezárjuk a választás után
+    this.showSmileyDropdown = false; 
   }
 
 //The messages that we send to the WS server 
@@ -66,12 +71,18 @@ export class ChatComponent implements OnInit {
 
     this.chatService.sendMessage(JSON.stringify(message));
     this.lastMessageTimestamp = currentTime;
+    this.scrollToBottom();
   }
 
   disconnectUser(e: any){
     this.chatService.closeConnection();
     localStorage.removeItem('jwtToken');
     this.router.navigate(['/loginPage']);
+  }
+
+  //This will set the actual scrolling position of the messagecontainer to the scrolling height, which is the last scrolling position, so we will always see the last message withot scrolling
+  scrollToBottom(): void {
+    this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
   }
 }
 
