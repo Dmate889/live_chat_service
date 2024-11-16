@@ -11,7 +11,7 @@ const app = express();
 //Middlewares & routes
 app.use(express.json()); 
 app.use(cors({
-  origin: 'https://dmater899.github.io',
+  origin: 'https://dmate889.github.io', 
   methods: ['GET', 'POST', 'OPTIONS'],
   credentials: true
 })); 

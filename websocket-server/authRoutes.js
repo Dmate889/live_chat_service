@@ -4,10 +4,17 @@ const express = require('express');
 const db = require('./databases/db');
 
 const router = express.Router();
+const cors = require('cors');
 
+const corsOptions = {
+    origin: 'https://dmate899.github.io', 
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Authorization', 'Content-Type'],
+    credentials: true
+  };
 
 //API endpoint for the register service 
-router.post('/register', (req, res) => {
+router.post('/register', cors(corsOptions), (req, res) => {
     const { username, password } = req.body;
     db.authUsers(username, password, (err) => {
         if (err) {
@@ -19,7 +26,7 @@ router.post('/register', (req, res) => {
   });
   
   //API endpoint for login page
-  router.post('/login', async (req, res) => {
+  router.post('/login', cors(corsOptions), async (req, res) => {
     const { username, password } = req.body;
         db.getUsers(username, password, (err, result) => {
             if (result.success) {
