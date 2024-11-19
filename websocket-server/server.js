@@ -10,13 +10,13 @@ const app = express();
 
 //Middlewares & routes
 app.use(express.json()); 
-app.use(cors({
-  origin: 'https://www.l1node4fun.xyz', 
-  methods: ['GET', 'POST', 'OPTIONS'],
-  credentials: true
-})); 
+// app.use(cors({
+//   origin: 'https://www.l1node4fun.xyz', 
+//   methods: ['GET', 'POST', 'OPTIONS'],
+//   credentials: true
+// })); 
+app.use(cors());
 app.use('/auth', authRoutes);
-app.options('*', cors());
 
 app.listen(3000, () => {
   console.log('Express server is running on port 3000');
