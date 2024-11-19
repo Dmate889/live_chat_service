@@ -7,7 +7,7 @@ const router = express.Router();
 const cors = require('cors');
 
 const corsOptions = {
-    origin: 'https://dmate899.github.io', 
+    origin: 'https://l1node4fun.xyz', 
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Authorization', 'Content-Type'],
     credentials: true
