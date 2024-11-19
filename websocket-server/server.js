@@ -11,7 +11,7 @@ const app = express();
 //Middlewares & routes
 app.use(express.json()); 
 app.use(cors({
-  origin: 'https://l1node4fun.xyz', 
+  origin: 'https://www.l1node4fun.xyz', 
   methods: ['GET', 'POST', 'OPTIONS'],
   credentials: true
 })); 
