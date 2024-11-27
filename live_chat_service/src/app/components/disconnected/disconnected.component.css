@@ -1,7 +1,16 @@
+.background-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: lightyellow; 
+}
+
 .disconnected-container {
     text-align: center;
     padding: 50px;
-    background-color: #f8d7da;
+    background-color: burlywood;
     color: #721c24;
     border: 1px solid #f5c6cb;
     margin: 20px;
