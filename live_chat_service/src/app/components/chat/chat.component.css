@@ -137,7 +137,7 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.5s;
 }
 
 .send-button {
@@ -145,7 +145,8 @@
 }
 
 .send-button:hover {
-  background-color: #43a047;
+  background-color: white;
+  color: #4caf50;
 }
 
 .disconnect {
@@ -153,7 +154,8 @@
 }
 
 .disconnect:hover {
-  background-color: red
+  background-color: white;
+  color: #f44336;
 }
 
 /* Responsiveness for tablets and bigger screen phones */
