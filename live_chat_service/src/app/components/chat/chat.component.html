@@ -19,7 +19,7 @@
           required
         />
         <div class="smiley-icon" (click)="toggleSmileyDropdown()">😊</div>
-  
+    <div class="smiley-container">
       <div class="smiley-dropdown" *ngIf="showSmileyDropdown">
         <span (click)="addSmiley('😊')">😊</span>
         <span (click)="addSmiley('😂')">😂</span>
@@ -28,6 +28,7 @@
         <span (click)="addSmiley('👍')">👍</span>
         <span (click)="addSmiley('💀')">💀</span>
       </div>
+    </div>
       <div class="buttons">
         <button type="submit" class="send-button">Send</button>
         <button type="button" class="disconnect" (click)="disconnectUser($event)">Logout</button>
