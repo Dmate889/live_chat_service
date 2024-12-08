@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    color: white;
 
     background-color: #2C3E50;
 }
@@ -23,6 +22,17 @@
     position: relative;
 }
 
+.h1-container{
+    background-color: white;
+    height: 150px;
+    width: 600px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+}
+
 h1{
     font-family: monospace;
     font-size: 25px;
@@ -30,7 +40,7 @@ h1{
 
 button{
     position: absolute;
-    bottom: 200px;
+    bottom: 100px;
     height: 60px;
     background-color: #1ABC9C;
     transition: background-color 0.5s;
