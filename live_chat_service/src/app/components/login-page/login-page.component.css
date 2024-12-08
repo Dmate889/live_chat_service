@@ -53,7 +53,7 @@ input{
 }
 
 input:hover{
-  background-color: lightgray;
+  background-color: rgb(190, 184, 184);
 }
 
 .buttons{

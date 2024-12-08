@@ -1,88 +1,77 @@
-.background-wrapper{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: lightyellow; 
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color:  #ECF0F1;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: monospace;
+
+  background-color: #2C3E50;
 }
 
-.form_s {
-    height: 500px;
-    width: 500px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
+.form_submit{
+  width: 250px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 180px;
+  box-shadow: 1px 1px 10px black;
+  position: relative;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: burlywood;
-  }
+  background-color: #34495E;
+}
 
-  .instructions{
-    font-family: monospace;
-  }
+h1{
+  position: absolute;
+  top: 20px;
+  left: 130px;
+}
 
-  input{
-    display: flex;
-    justify-content: space-between;
-    height: 30px;
-    margin-top: 10px;
-    font-family: monospace;
-    align-content: center;
-    padding-left: 12px;
-  }
+.inputs{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
 
-  button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 20px;
-    margin-left: 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-family: monospace;
-  }
+  border-color: #95A5A6;
+}
 
-  button:hover {
-    background-color: white; 
-    color: black; 
-    border:#4CAF50; 
-  }
+input{
+  height: 40px;
+  width: 350px;
+  border-radius: 20px;
+  padding: 5px;
+  font-family: monospace;
+  transition: background-color 0.5s;
 
-  .buttons{
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+}
 
-  @media (max-width: 480px) and (orientation: landscape),
-         (max-width: 480px) and (orientation: portrait) {
+input:hover{
+  background-color: rgb(190, 184, 184);
+}
 
-      .form_s{
-        max-width: 80%;
-        height: 100vh;
-      }
-      .instructions {
-        font-family: monospace;
-        text-align: justify; 
-        line-height: 1.5; 
-        max-width: 400px; 
-        padding: 10px 0; 
-    }
-      
-    }
+.buttons{
+  display: flex;
+  flex-direction: column;
+  margin-top: 80px;
+  gap: 15px;
+}
 
+button{
+  height: 40px;
+  background-color: #1ABC9C;
+  transition: background-color 0.5s;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+button:hover{
+  background-color: white;
+}
 
