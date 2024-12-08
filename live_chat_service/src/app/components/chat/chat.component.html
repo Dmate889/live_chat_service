@@ -1,44 +1,27 @@
-<div class="background-container">
-  <div class="chat-container">
-    <div class="message-container" #messageContainer>
-      <div *ngFor="let message of messages" class="message">
-        <div class="message-sender">{{ message.sender }}</div>
-        <div class="message-content">{{ message.content }}</div>
-        <div class="message-time">{{ message.timestamp | date : "short" }}</div>
-      </div>
-    </div>
-
-    <form (submit)="sendMessage($event)" class="message-input-container">
-      <input
-        [(ngModel)]="newMessage"
-        type="text"
-        name="message"
-        placeholder="Send a message..."
-        autocomplete="off"
-        class="message-input"
-        required
-      />
-      <div class="smiley-icon" (click)="toggleSmileyDropdown()">😊</div>
-      <div class="smiley-container">
-        <div class="smiley-dropdown" *ngIf="showSmileyDropdown">
-          <span (click)="addSmiley('😊')">😊</span>
-          <span (click)="addSmiley('😂')">😂</span>
-          <span (click)="addSmiley('😍')">😍</span>
-          <span (click)="addSmiley('🤔')">🤔</span>
-          <span (click)="addSmiley('👍')">👍</span>
-          <span (click)="addSmiley('💀')">💀</span>
+<div class="wrapper-container">
+  <div class="chat-box">
+      <div class="messages" #messageContainer>
+        <div *ngFor="let message of messages" class="message">
+          <div class="message-sender">{{message.sender}}</div>
+          <div class="message-content">{{message.content}}</div>
+          <div class="message-time">{{message.timestamp | date: 'short'}}</div>
         </div>
       </div>
-      <div class="buttons">
-        <button type="submit" class="send-button">Send</button>
-        <button
-          type="button"
-          class="disconnect"
-          (click)="disconnectUser($event)"
-        >
-          Logout
-        </button>
-      </div>
+    <form (submit)="sendMessage($event)">
+      <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message">
     </form>
+    <div class="buttons">
+      <div class="smiley-dropdown" (click)="toggleSmileyDropdown()">😊</div>
+      <div class="smiley-icons" *ngIf="showSmileyDropdown">
+        <span (click)="addSmiley('😊')">😊</span>
+        <span (click)="addSmiley('😂')">😂</span>
+        <span (click)="addSmiley('😍')">😍</span>
+        <span (click)="addSmiley('🤔')">🤔</span>
+        <span (click)="addSmiley('👍')">👍</span>
+        <span (click)="addSmiley('💀')">💀</span>
+      </div>
+      <button type="submit">Send</button>
+      <button type="button" (click)="disconnectUser($event)">Logout</button>
+    </div>
   </div>
 </div>
