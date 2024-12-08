@@ -1,10 +1,6 @@
-<div class="background-container">
-  <div class="disconnected-container">
-      <h1>You are disconnected</h1>
-      <p>Your connection has been terminated</p>
-    </div>
-      
-    <div>
-      <button type="submit" class="button" (click)="backtoChat($event)">Go Back to the Login page</button>
+<div class="wrapper">
+    <div class="disconnect-box">
+        <h1>You are disconnected from the chat.</h1>
+        <button (click)="backtoChat($event)" type="button">Back to Login page</button>
     </div>
 </div>
