@@ -27,8 +27,16 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-right: 10px;
-  padding-bottom: 20px;
+  padding: 35px;
+  border-radius: 30px;
+  border: solid;
+  border-width: 0.5px;
+  border-color: rgb(190, 184, 184);
+  transition: box-shadow 0.8s;
+}
+
+.messages:hover{
+  box-shadow: 2px 2px 40px rgb(190, 184, 184);
 }
 
 .messages::-webkit-scrollbar{
@@ -46,6 +54,10 @@
   padding: 15px;
   position: relative;
   font-family: monospace;
+}
+
+.message:nth-child(even){
+  background-color: rgb(190, 184, 184);
 }
 
 .message-time{

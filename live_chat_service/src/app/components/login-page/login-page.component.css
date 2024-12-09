@@ -76,3 +76,11 @@ button:hover{
   background-color: white;
 }
 
+
+@media (max-width: 480px){
+
+  .wrapper{
+    height: 135vh;
+    width: 78vh;
+  }
+}
