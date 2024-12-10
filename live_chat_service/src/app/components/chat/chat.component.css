@@ -31,6 +31,11 @@
   padding: 15px;
   border-radius: 10px;
   border: solid 0.5px rgb(190, 184, 184);
+  transition: box-shadow 0.5s;
+}
+
+.messages:hover{
+  box-shadow: 2px 2px 15px white;
 }
 
 .messages::-webkit-scrollbar {
@@ -136,6 +141,7 @@ button:hover {
   font-size: 30px;
   bottom: -50px;
   left: 0;
+  cursor: pointer;
 }
 
 @container (max-width: 768px) {
