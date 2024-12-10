@@ -1,75 +1,49 @@
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
-  color:  #ECF0F1;
-  margin: 0;
-  padding: 0;
-  font-size: 20px;
-  font-weight: 500;
-  font-family: monospace;
-
+  padding: 20px;
   background-color: #2C3E50;
-}
-
-.form_submit{
-  width: 250px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  border: none;
-  padding: 180px;
-  box-shadow: 1px 1px 10px black;
-  position: relative;
-
-  background-color: #34495E;
-}
-
-h1{
-  position: absolute;
-  top: 20px;
-  left: 255px;
-}
-
-.inputs{
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: center;
-
-  border-color: #95A5A6;
-}
-
-input{
-  height: 40px;
-  width: 350px;
-  border-radius: 20px;
-  padding: 5px;
+  color: #ECF0F1;
+  font-size: 20px;
   font-family: monospace;
-  transition: background-color 0.5s;
-
+  container: size; 
+  box-sizing: border-box;
 }
 
-input:hover{
-  background-color: rgb(190, 184, 184);
-}
-
-.buttons{
+.form_submit {
+  width: 100%;
+  max-width: 400px;
+  padding: 50px;
+  background-color: #34495E;
+  box-shadow: 1px 1px 10px black;
   display: flex;
   flex-direction: column;
-  margin-top: 80px;
-  gap: 15px;
+  gap: 20px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+
+
+input, button {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 button{
-  height: 40px;
   background-color: #1ABC9C;
+  cursor: pointer;
   transition: background-color 0.5s;
   font-family: monospace;
-  font-weight: 600;
-  cursor: pointer;
+  font-weight: bold;
+  border-radius: 15px;
 }
 
 button:hover{
@@ -77,10 +51,47 @@ button:hover{
 }
 
 
-@media (max-width: 480px){
+input{
+  border-radius: 15px;
+  transition: background-color 0.5s;
+  font-family: monospace;
+}
 
-  .wrapper{
-    height: 135vh;
-    width: 78vh;
+input:hover{
+  background-color: rgb(190, 184, 184);;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+  margin-top: 20px; 
+}
+
+
+
+@container (max-width: 480px) {
+  .form_submit {
+    max-width: 100%; 
+    padding: 20px;
+  }
+
+  input, button {
+    max-width: 100%;
+    font-size: 14px;
+  }
+
+  h1 {
+    display: none; 
+  }
+
+  .inputs, .buttons {
+    gap: 10px; 
   }
 }
