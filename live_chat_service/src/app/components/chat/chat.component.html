@@ -7,21 +7,22 @@
           <div class="message-time">{{message.timestamp | date: 'short'}}</div>
         </div>
       </div>
-    <form (submit)="sendMessage($event)">
-      <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message">
-    </form>
-    <div class="buttons">
-      <div class="smiley-dropdown" (click)="toggleSmileyDropdown()">😊</div>
-      <div class="smiley-icons" *ngIf="showSmileyDropdown">
-        <span (click)="addSmiley('😊')">😊</span>
-        <span (click)="addSmiley('😂')">😂</span>
-        <span (click)="addSmiley('😍')">😍</span>
-        <span (click)="addSmiley('🤔')">🤔</span>
-        <span (click)="addSmiley('👍')">👍</span>
-        <span (click)="addSmiley('💀')">💀</span>
-      </div>
-      <button type="submit">Send</button>
-      <button type="button" (click)="disconnectUser($event)">Logout</button>
+      
+        <form (submit)="sendMessage($event)">
+          <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message">
+        </form>
+        <div class="buttons">
+          <div class="smiley-dropdown" (click)="toggleSmileyDropdown()">😊</div>
+          <div class="smiley-icons" *ngIf="showSmileyDropdown">
+            <span (click)="addSmiley('😊')">😊</span>
+            <span (click)="addSmiley('😂')">😂</span>
+            <span (click)="addSmiley('😍')">😍</span>
+            <span (click)="addSmiley('🤔')">🤔</span>
+            <span (click)="addSmiley('👍')">👍</span>
+            <span (click)="addSmiley('💀')">💀</span>
+          </div>
+          <button type="submit">Send</button>
+          <button type="button" (click)="disconnectUser($event)">Logout</button>
     </div>
   </div>
 </div>
