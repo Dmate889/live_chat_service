@@ -16,7 +16,7 @@ export class ChatService {
     this.token = localStorage.getItem('jwtToken');
 
     this.socket$ = new WebSocketSubject({
-      url: `ws://localhost:8080?token=${this.token}`,
+      url: `wss://l1node4fun.xyz/ws/?token=${this.token}`,
       deserializer: msg => JSON.parse(msg.data),
       serializer: msg => JSON.stringify(msg)
     });

@@ -3,19 +3,23 @@ const WebSocket = require('ws');
 const db = require('./databases/db');
 const jwt = require('jsonwebtoken');
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');
 const authRoutes = require('./authRoutes');
 
 const app = express();
 
 //Middlewares & routes
 app.use(express.json()); 
-// app.use(cors({
-//   origin: 'https://www.l1node4fun.xyz', 
+
+// const allowedOrigins = 'https://www.l1node4fun.xyz';
+// const corsOptions = {
+//   origin: allowedOrigins,
 //   methods: ['GET', 'POST', 'OPTIONS'],
+//   allowedHeaders: ['Authorization', 'Content-Type'],
 //   credentials: true
-// })); 
-app.use(cors());
+// };
+// app.use(cors(corsOptions));
+
 app.use('/auth', authRoutes);
 
 app.listen(3000, () => {

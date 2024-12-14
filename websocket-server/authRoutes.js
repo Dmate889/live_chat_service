@@ -14,6 +14,8 @@ const router = express.Router();
 //     credentials: true
 //   };
 
+//   application.use(cors(corsOptions));
+
 //API endpoint for the register service 
 router.post('/register', (req, res) => {
     const { username, password } = req.body;
