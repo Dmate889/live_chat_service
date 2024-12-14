@@ -11,7 +11,7 @@ const app = express();
 //Middlewares & routes
 app.use(express.json()); 
 
-// const allowedOrigins = 'https://www.l1node4fun.xyz';
+// const allowedOrigins = 'http://localhost:4200';
 // const corsOptions = {
 //   origin: allowedOrigins,
 //   methods: ['GET', 'POST', 'OPTIONS'],

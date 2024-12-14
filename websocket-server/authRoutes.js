@@ -8,13 +8,13 @@ const router = express.Router();
 
 
 // const corsOptions = {
-//     origin: 'https://www.l1node4fun.xyz', 
+//     origin: 'http://localhost:4200', 
 //     methods: ['GET', 'POST', 'OPTIONS'],
 //     allowedHeaders: ['Authorization', 'Content-Type'],
 //     credentials: true
 //   };
 
-//   application.use(cors(corsOptions));
+//   app.use(cors(corsOptions));
 
 //API endpoint for the register service 
 router.post('/register', (req, res) => {

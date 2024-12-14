@@ -8,7 +8,7 @@
         </div>
       </div>
       
-        <form (submit)="sendMessage($event)">
+        <form>
           <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message">
         </form>
         <div class="buttons">
@@ -21,7 +21,7 @@
             <span (click)="addSmiley('👍')">👍</span>
             <span (click)="addSmiley('💀')">💀</span>
           </div>
-          <button type="submit">Send</button>
+          <button type="submit" (click)="sendMessage($event)">Send</button>
           <button type="button" (click)="disconnectUser($event)">Logout</button>
     </div>
   </div>
