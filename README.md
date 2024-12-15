@@ -6,7 +6,7 @@ Live Chat Service is a real-time chat application designed to facilitate seamles
 
 - **Real-time Communication:** Enables instant messaging using WebSocket technology (`ws`: a Node.js WebSocket library).
 - **Scalability:** Designed to handle multiple concurrent users efficiently.
-- **User-Friendly Interface:** Intuitive and responsive UI built with Angular. Accessible from mobile as well.
+- **User-Friendly Interface:** Intuitive and responsive(accessible from mobile as well) UI built with Angular. 
 - **Reactive Programming:** Utilizes RxJS for managing real-time data streams.
 - **Secure Connections:** Ensures data privacy and security during transmission.
 
