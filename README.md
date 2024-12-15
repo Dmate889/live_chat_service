@@ -8,7 +8,7 @@ Both front-end and back-end are hosted on a Linode server.
 
 ## Features
 
-- **Real-time Communication:** Enables instant messaging using WebSocket technology (`ws`: a Node.js WebSocket library).
+- **Real-time Communication:** Enables instant messaging using WebSocket technology.
 - **Scalability:** Designed to handle multiple concurrent users efficiently.
 - **User-Friendly Interface:** Intuitive and responsive(accessible from mobile as well) UI built with Angular. 
 - **Reactive Programming:** Utilizes RxJS for managing real-time data streams.
