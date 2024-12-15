@@ -2,6 +2,10 @@
 
 Live Chat Service is a real-time chat application designed to facilitate seamless communication between users. Built with modern web technologies, this project leverages Angular, RxJS, and Node.js to deliver a responsive and scalable solution for real-time interactions.
 
+Prod version available: [https://l1node4fun.xyz](https://l1node4fun.xyz)  
+Both front-end and back-end are hosted on a Linode server.
+
+
 ## Features
 
 - **Real-time Communication:** Enables instant messaging using WebSocket technology (`ws`: a Node.js WebSocket library).
