@@ -16,11 +16,11 @@ Both front-end and back-end are hosted on a Linode server.
 
 ## Technologies Used
 
-- **Frontend:** Angular, RxJS
-- **Backend:** Node.js, Express
-- **WebSocket:** `ws`: a Node.js WebSocket library
-- **Database:** SQLite3
-- **Others:** JSON Web Tokens (JWT), bcrypt (for secure password hashing)
+- **Frontend:** Angular(v18.2.1), RxJS(v7.8.0)
+- **Backend:** Node.js(v20.12.2), Express(v4.21.1)
+- **WebSocket:** `ws`: a Node.js WebSocket library(v8.18.0)
+- **Database:** SQLite3(v5.1.7)
+- **Others:** JSON Web Tokens(v9.0.2), bcrypt(v5.1.1) (for secure password hashing)
 
 ---
 
