@@ -20,7 +20,7 @@ Both front-end and back-end are hosted on a Linode server.
 - **Backend:** Node.js(v20.12.2), Express(v4.21.1)
 - **WebSocket:** `ws`: a Node.js WebSocket library(v8.18.0)
 - **Database:** SQLite3(v5.1.7)
-- **Others:** JSON Web Tokens(v9.0.2), bcrypt(v5.1.1) (for secure password hashing)
+- **Others:** JSON Web Token(v9.0.2), bcrypt(v5.1.1) (for secure password hashing)
 
 ---
 
