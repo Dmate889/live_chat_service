@@ -3,7 +3,7 @@ const WebSocket = require('ws');
 const db = require('./databases/db');
 const jwt = require('jsonwebtoken');
 const express = require('express');
-// const cors = require('cors');
+const cors = require('cors');
 const authRoutes = require('./authRoutes');
 
 const app = express();
@@ -11,14 +11,14 @@ const app = express();
 //Middlewares & routes
 app.use(express.json()); 
 
-// const allowedOrigins = 'http://localhost:4200';
-// const corsOptions = {
-//   origin: allowedOrigins,
-//   methods: ['GET', 'POST', 'OPTIONS'],
-//   allowedHeaders: ['Authorization', 'Content-Type'],
-//   credentials: true
-// };
-// app.use(cors(corsOptions));
+const allowedOrigins = 'http://localhost:4200';
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Authorization', 'Content-Type'],
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 app.use('/auth', authRoutes);
 
