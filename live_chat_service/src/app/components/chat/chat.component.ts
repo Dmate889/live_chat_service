@@ -32,6 +32,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       });
       this.newMessage = '';
     });
+
   }
 
   ngAfterViewChecked() {
@@ -89,5 +90,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   scrollToBottom(): void {
     this.messageContainer.nativeElement.scrollTop =
       this.messageContainer.nativeElement.scrollHeight;
+  }
+
+  characterCounter(){
+    let maxChars = 255;
+    let counter = document.getElementById("maxChars");
+    let inputField = (<HTMLInputElement>document.getElementById("message"))
+  
+    if(inputField && counter){
+      let remainingChars = maxChars - inputField.value.length;
+      counter.textContent = `${remainingChars}`;
+    }
   }
 }
