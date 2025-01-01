@@ -93,13 +93,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   characterCounter(){
+      
+    let inputField = (<HTMLInputElement>document.getElementById("message"));
     let maxChars = 255;
     let counter = document.getElementById("maxChars");
-    let inputField = (<HTMLInputElement>document.getElementById("message"))
   
     if(inputField && counter){
       let remainingChars = maxChars - inputField.value.length;
-      counter.textContent = `Remaining chars: ${remainingChars}`;
+      counter.textContent = `Remaining: ${remainingChars}`;
+      if(remainingChars < 0) counter.textContent = `Remaining: 0`;
     }
   }
 }
