@@ -99,7 +99,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   
     if(inputField && counter){
       let remainingChars = maxChars - inputField.value.length;
-      counter.textContent = `${remainingChars}`;
+      counter.textContent = `Remaining chars: ${remainingChars}`;
     }
   }
 }
