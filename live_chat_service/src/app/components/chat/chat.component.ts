@@ -32,6 +32,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       });
       this.newMessage = '';
     });
+
+    // let maxChars = 255;
+    // let counter = document.getElementById("maxChars");
+    // let inputField = (<HTMLInputElement>document.getElementById("message"))
+  
+    // if(inputField && counter){
+    //   let remainingChars = maxChars - inputField.value.length;
+    //   counter.textContent = `${remainingChars}`;
+    // }
   }
 
   ngAfterViewChecked() {

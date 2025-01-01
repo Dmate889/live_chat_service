@@ -9,7 +9,7 @@
       </div>
       
         <form (ngSubmit)="sendMessage($event)">
-          <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message">
+          <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message" id="message" (input)="characterCounter()">
         </form>
         <div class="buttons">
           <div class="smiley-dropdown" (click)="toggleSmileyDropdown()">😊</div>
@@ -23,6 +23,7 @@
           </div>
           <button type="button" (click)="disconnectUser($event)">Logout</button>
           <button type="submit" (click)="sendMessage($event)">Send</button>
+          <label id="maxChars">255</label>
     </div>
   </div>
 </div>
