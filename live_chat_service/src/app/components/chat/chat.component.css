@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   background-color: #2C3E50;
   color: white;
   container: size;
@@ -145,6 +145,60 @@ button:hover {
   bottom: -50px;
   left: 0;
   cursor: pointer;
+}
+
+.userPanel{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  max-width: 400px;
+  height: 700px;
+  padding: 30px;
+  box-shadow: 2px 2px 10px white;
+  border-radius: 15px;
+  background-color: #34495E;
+  position: relative;
+  margin-right: 100px;
+}
+
+.userContainer{
+  max-height: 800px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 30px;
+  border: solid 0.5px rgb(190, 184, 184);
+  transition: box-shadow 0.5s;
+  background-color: white;
+  color: black;
+}
+
+.userh1{
+  font-family: monospace;
+}
+
+.userRecord{
+  border:solid;
+  border-width: 3px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: rgb(189, 184, 184);
+  transition: background-color 0.5s;
+  font-family: monospace;
+  
+}
+
+.userRecord:hover{
+  opacity: 0.7px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.userName{
+  font-weight: bold;
+  font-size: larger;
 }
 
 @container (max-width: 768px) {
