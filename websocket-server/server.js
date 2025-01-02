@@ -57,7 +57,7 @@ server.on('connection', (ws, req) => {
     return;
   }
 
-  console.log(`${user.name} connected`);
+  db.setStateUsersOnline(user.name);
 
   //Making the messages visible from the DB on the UI
   db.getMessages((err, messages) => {
@@ -75,6 +75,24 @@ server.on('connection', (ws, req) => {
      }) 
     }
   })
+
+  //Sending the online users data to FE
+  db.getUsersRecord('online', (err, users) => {
+    if (err) {
+      console.log('Error fetching users:', err);
+      return;
+    }
+  
+    users.forEach((user) => {
+      ws.send(
+        JSON.stringify({
+          name: Buffer.isBuffer(user.name) ? user.name.toString() : user.name,
+          createdAt: user.createdAt
+        })
+      );
+    });
+  });
+ 
 
     ws.messageCount = 0;
     ws.startTime = Date.now();
@@ -118,7 +136,7 @@ server.on('connection', (ws, req) => {
 
 //Disconnect message from WS
   ws.on('close', () => {
-      console.log(`${user.name} disconnected from the server`);
+      db.setStateUsersOffline(user.name);
   });
 });
 

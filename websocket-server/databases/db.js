@@ -12,7 +12,7 @@ const db = new sqlite3.Database('./chat.db', sqlite3.OPEN_READWRITE | sqlite3.OP
 
 //Create the tables
 db.run('CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT, timestamp DATETIME, user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(id))');
-db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, role TEXT DEFAULT user)');
+db.run('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, role TEXT DEFAULT user, state TEXT DEFAULT offline )');
 
 //Inserting new users into the DB
 async function authUsers(username, password, callback){  
@@ -76,12 +76,58 @@ function getMessages(callback){
   });
 }
 
-//Exporting the 2 functions, so it can be used in server.js
+//Getting the online users from the users table
+function getUsersRecord(state, callback){
+  const query = 'SELECT name FROM users WHERE state = ?';
+
+  db.all(query, [state], (err, rows) => {
+    if(err){
+      console.log(`There was a problem with ${query}`, err);
+      return callback(err);
+    } 
+    else{
+      callback(null, rows);
+    }
+  });
+}
+
+function setStateUsersOnline(name, callback){
+  const query = 'UPDATE users SET state = ? WHERE name = ?';
+
+  db.run(query, ['online', name], (err) => {
+    if(err){
+      console.log(`There was a problem with ${query}` + err);
+      return callback(err);
+    }
+    else{
+      console.log(`${name} is now online.`);
+    }
+  })
+}
+
+function setStateUsersOffline(name, callback){
+  const query = 'UPDATE users SET state = ? WHERE name = ?';
+
+  db.run(query, ['offline', name], (err) => {
+    if(err){
+      console.log(`There was a problem with ${query}` + err);
+      return callback(err);
+    }
+    else{
+      console.log(`${name} is now offline.`);
+    }
+  })
+}
+
+//Exporting the functions, so it can be used in server.js
 module.exports = {
   addMessage,
   getMessages,
   authUsers,
   getUsers,
+  getUsersRecord,
+  setStateUsersOnline,
+  setStateUsersOffline,
   JWT_SECRET
 };
 
