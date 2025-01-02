@@ -2,14 +2,16 @@
   <div class="userPanel">
     <h1 class="userh1">Online users</h1>
     <div class="userContainer">
-      <div class="userRecord">
-        <div class="userName">John Doe</div>
-        <div class="registered">Registered: 1/2/25, 3:11 PM</div>
+      <div class="noUsers" *ngIf="userRec.length === 0">No online users</div>
+      <div *ngFor="let user of userRec" class="userRecord">
+        <div class="userName">{{user.name}}</div>
+        <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
       </div>
     </div>
   </div>
   <div class="chat-box">
       <div class="messages" #messageContainer>
+        <div class="noMessages" *ngIf="messages.length === 0">No messages</div>
         <div *ngFor="let message of messages" class="message">
           <div class="message-sender">{{message.sender}}</div>
           <div class="message-content">{{message.content}}</div>

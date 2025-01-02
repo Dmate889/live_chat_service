@@ -13,6 +13,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   //The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
   messages: { content: string; sender: string; timestamp: Date }[] = [];
+  userRec: {name: string; createdAt: Date}[] = [];
   newMessage: string = '';
   lastMessageTimestamp: number = 0;
   cooldownTime: number = 300;
@@ -35,6 +36,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.newMessage = '';
     });
 
+    this.chatService.getUserList().subscribe((users: any) => {
+      if(users.name){
+        this.userRec.push({
+          name: users.name,
+          createdAt: users.createdAt
+        });
+      }
+    })
 
   }
 

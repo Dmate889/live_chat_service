@@ -78,7 +78,7 @@ function getMessages(callback){
 
 //Getting the online users from the users table
 function getUsersRecord(state, callback){
-  const query = 'SELECT name FROM users WHERE state = ?';
+  const query = 'SELECT name, createdAt FROM users WHERE state = ?';
 
   db.all(query, [state], (err, rows) => {
     if(err){

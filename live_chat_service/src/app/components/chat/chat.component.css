@@ -201,6 +201,19 @@ button:hover {
   font-size: larger;
 }
 
+.noUsers{
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+}
+
+.noMessages{
+  font-family: monospace;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
 @container (max-width: 768px) {
   .chat-box {
     width: 95%;

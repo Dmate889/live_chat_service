@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebSocketSubject } from 'rxjs/webSocket';
+import { filter, map, tap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +52,9 @@ export class ChatService {
     return this.socket$.asObservable();
   }
 
-  getUserList(){
-    return this.socket$.asObservable();
+  getUserList() {
+    return this.socket$.asObservable().pipe(
+      tap(msg => console.log('Received users WebSocket message:', msg)),
+    );
   }
-
 }
