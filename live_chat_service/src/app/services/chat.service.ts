@@ -49,4 +49,9 @@ export class ChatService {
   getMessages() {
     return this.socket$.asObservable();
   }
+
+  getUserList(){
+    return this.socket$.asObservable();
+  }
+
 }
