@@ -36,14 +36,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.newMessage = '';
     });
 
-    this.chatService.getUserList().subscribe((users: any) => {
-      if(users.name){
-        this.userRec.push({
-          name: users.name,
-          createdAt: users.createdAt
-        });
+    this.chatService.getUserList().subscribe((response: any) => {
+      if (Array.isArray(response)) {
+        this.userRec = response.map((user) => ({
+          name: user.name,
+          createdAt: user.createdAt,
+        }));
+      } else {
+        console.error('Unexpected user list format:', response);
       }
-    })
+    });
 
   }
 

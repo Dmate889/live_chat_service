@@ -54,7 +54,8 @@ export class ChatService {
 
   getUserList() {
     return this.socket$.asObservable().pipe(
-      tap(msg => console.log('Received users WebSocket message:', msg)),
+      filter(msg => msg.type === 'userList'),
+      map(msg => msg.users) 
     );
   }
 }

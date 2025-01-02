@@ -94,7 +94,8 @@ server.on("connection", (ws, req) => {
       if (client.readyState === WebSocket.OPEN) {
         client.send(
           JSON.stringify({
-            users: userList,
+            type: 'userList',
+            users: userList
           })
         );
       }
@@ -173,6 +174,7 @@ server.on("connection", (ws, req) => {
           if (client.readyState === WebSocket.OPEN) {
             client.send(
               JSON.stringify({
+                type: 'userList',
                 users: userList,
               })
             );
