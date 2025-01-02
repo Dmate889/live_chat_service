@@ -148,7 +148,7 @@ server.on("connection", (ws, req) => {
   });
 
   //Disconnect message from WS
-  s.on("close", () => {
+  ws.on("close", () => {
     db.setStateUsersOffline(user.name, (err) => {
       if (err) {
         console.log("Error setting user offline:", err);
@@ -157,7 +157,7 @@ server.on("connection", (ws, req) => {
 
       console.log(`${user.name} disconnected from the server`);
 
-      // Frissítsük az online felhasználók listáját minden kliensnek
+      //Online users refreshed after a user gone offline
       db.getUsersRecord("online", (err, users) => {
         if (err) {
           console.log("Error fetching users:", err);

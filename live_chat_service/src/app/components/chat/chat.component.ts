@@ -22,16 +22,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: any) => {
-      this.messages.push({
-        content:
-          typeof message.content === 'object'
-            ? JSON.stringify(message.content)
-            : message.content,
-        sender: message.sender,
-        timestamp: message.timestamp,
-      });
+      if(message.content){
+        this.messages.push({
+          content:
+            typeof message.content === 'object'
+              ? JSON.stringify(message.content)
+              : message.content,
+          sender: message.sender,
+          timestamp: message.timestamp,
+        });
+      }
       this.newMessage = '';
     });
+
 
   }
 
