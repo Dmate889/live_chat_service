@@ -36,7 +36,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.newMessage = '';
     });
 
-    this.chatService.getUserList().subscribe((response: any) => {
+    this.chatService.getUserList().subscribe((response: any[]) => {
       if (Array.isArray(response)) {
         this.userRec = response.map((user) => ({
           name: user.name,
@@ -46,7 +46,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.error('Unexpected user list format:', response);
       }
     });
-
   }
 
   ngAfterViewChecked() {

@@ -88,7 +88,6 @@ server.on("connection", (ws, req) => {
       name: Buffer.isBuffer(user.name) ? user.name.toString() : user.name,
       createdAt: user.createdAt,
     }));
-    console.log('The user object at backend is' + JSON.stringify(userList));
 
     server.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
@@ -155,8 +154,6 @@ server.on("connection", (ws, req) => {
         console.log("Error setting user offline:", err);
         return;
       }
-
-      console.log(`${user.name} disconnected from the server`);
 
       //Online users refreshed after a user gone offline
       db.getUsersRecord("online", (err, users) => {
