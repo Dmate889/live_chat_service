@@ -147,6 +147,21 @@ button:hover {
   cursor: pointer;
 }
 
+.userButtons{
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.userButtons button{
+  background-color: rgb(190, 184, 184);
+  font-weight: bold;
+}
+
+.userButtons button:hover{
+  background-color: white;
+}
+
 .userPanel{
   display: flex;
   flex-direction: column;
@@ -322,5 +337,7 @@ button:hover {
     display: none;
   }
 }
+
+
 
 
