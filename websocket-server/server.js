@@ -149,36 +149,31 @@ server.on("connection", (ws, req) => {
 
   //Disconnect message from WS
   ws.on("close", () => {
-    db.setStateUsersOffline(user.name, (err) => {
+    db.setStateUsersOffline(user.name);
+    db.getUsersRecord("online", (err, users) => {
       if (err) {
-        console.log("Error setting user offline:", err);
+        console.log("Error fetching users:", err);
         return;
       }
-
-      //Online users refreshed after a user gone offline
-      db.getUsersRecord("online", (err, users) => {
-        if (err) {
-          console.log("Error fetching users:", err);
-          return;
+  
+      const userList = users.map((user) => ({
+        name: Buffer.isBuffer(user.name) ? user.name.toString() : user.name,
+        createdAt: user.createdAt,
+      }));
+  
+      server.clients.forEach((client) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(
+            JSON.stringify({
+              type: 'userList',
+              users: userList
+            })
+          );
         }
-
-        const userList = users.map((user) => ({
-          name: Buffer.isBuffer(user.name) ? user.name.toString() : user.name,
-          createdAt: user.createdAt,
-        }));
-
-        server.clients.forEach((client) => {
-          if (client.readyState === WebSocket.OPEN) {
-            client.send(
-              JSON.stringify({
-                type: 'userList',
-                users: userList,
-              })
-            );
-          }
-        });
       });
     });
+
+
   });
 });
 

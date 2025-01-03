@@ -3,12 +3,13 @@
     <h1 class="userh1">Online users</h1>
     <div class="userContainer">
       <div class="noUsers" *ngIf="userRec.length === 0">No online users</div>
-      <div *ngFor="let user of userRec" class="userRecord">
-        <div class="userName">{{user.name}}</div>
-        <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
-      </div>
+        <div *ngFor="let user of userRec" class="userRecord">
+          <div class="userName">{{user.name}}</div>
+          <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
+        </div>
     </div>
   </div>
+
   <div class="chat-box">
       <div class="messages" #messageContainer>
         <div class="noMessages" *ngIf="messages.length === 0">No messages</div>

@@ -13,17 +13,18 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   //The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
   messages: { content: string; sender: string; timestamp: Date }[] = [];
-  userRec: {name: string; createdAt: Date}[] = [];
+  userRec: { name: string; createdAt: Date }[] = [];
   newMessage: string = '';
   lastMessageTimestamp: number = 0;
   cooldownTime: number = 300;
   showSmileyDropdown = false;
+  userList = false;
 
   constructor(private chatService: ChatService, private router: Router) {}
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: any) => {
-      if(message.content){
+      if (message.content) {
         this.messages.push({
           content:
             typeof message.content === 'object'
@@ -46,6 +47,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.error('Unexpected user list format:', response);
       }
     });
+
   }
 
   ngAfterViewChecked() {
@@ -78,7 +80,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       return;
     }
 
-    if(this.newMessage.length > 255){
+    if (this.newMessage.length > 255) {
       alert('You have reached the character limit of 255');
       return;
     }
@@ -105,16 +107,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.messageContainer.nativeElement.scrollHeight;
   }
 
-  characterCounter(){
-      
-    let inputField = (<HTMLInputElement>document.getElementById("message"));
+  characterCounter() {
+    let inputField = <HTMLInputElement>document.getElementById('message');
     let maxChars = 255;
-    let counter = document.getElementById("maxChars");
-  
-    if(inputField && counter){
+    let counter = document.getElementById('maxChars');
+
+    if (inputField && counter) {
       let remainingChars = maxChars - inputField.value.length;
       counter.textContent = `Remaining: ${remainingChars}`;
-      if(remainingChars < 0) counter.textContent = `Remaining: 0`;
+      if (remainingChars < 0) counter.textContent = `Remaining: 0`;
     }
   }
 }

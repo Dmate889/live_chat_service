@@ -303,7 +303,7 @@ button:hover {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px){
   .message {
     display: flex;
     flex-direction: column; 
@@ -322,4 +322,5 @@ button:hover {
     display: none;
   }
 }
+
 
