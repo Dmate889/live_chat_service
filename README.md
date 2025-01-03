@@ -80,7 +80,7 @@ Before running the **Live Chat Service** project, ensure that the following prer
 Here are some planned features and enhancements for the Live Chat Service:
 
 1. **Online Users Interface**
-   - Develop a dedicated interface on the frontend where users can see a live list of all currently online users.
+   - Develop a dedicated interface on the frontend where users can see a live list of all currently online users. (UPDATE: Implemented)
 
 2. **Admin Panel**
    - Create an admin-specific dashboard where administrators can perform CRUD (Create, Read, Update, Delete) operations on database tables.
