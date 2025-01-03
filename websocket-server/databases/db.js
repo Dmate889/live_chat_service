@@ -94,11 +94,22 @@ function getUsersRecord(state, callback) {
 
   db.all(query, [state], (err, rows) => {
     if (err) {
-      console.log(`There was a problem with ${query}`, err);
+      console.log(`There was a fetching users with ${query}`, err);
       return callback(err);
     } else {
       callback(null, rows);
     }
+  });
+}
+
+function getUserRecordsAll(callback){
+  const query = "SELECT name, createdAt, state FROM users";
+
+  db.all(query, [], (err, rows)=>{
+    if(err){
+      console.log(`There was a problem fetching users with ${query}`, err);
+    }
+    else callback(null,rows);
   });
 }
 
@@ -135,6 +146,7 @@ module.exports = {
   authUsers,
   getUsers,
   getUsersRecord,
+  getUserRecordsAll,
   setStateUsersOnline,
   setStateUsersOffline,
   JWT_SECRET,
