@@ -34,7 +34,7 @@ router.post('/register', (req, res) => {
         db.getUsers(username, password, (err, result) => {
             if (result.success) {
                 res.status(200).json({ message: 'Login successful', token: result.token });
-            } else {
+            } else  {
                 res.status(401).json({ message: result.message });
             }
         });   

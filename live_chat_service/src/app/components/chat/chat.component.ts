@@ -14,11 +14,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   //The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
   messages: { content: string; sender: string; timestamp: Date }[] = [];
   userRec: { name: string; createdAt: Date }[] = [];
+  userRecAll: {name: string; createdAt: Date; state: string}[] = [];
   newMessage: string = '';
   lastMessageTimestamp: number = 0;
   cooldownTime: number = 300;
   showSmileyDropdown = false;
-  userList = false;
+  userPanelOnline = true;
+  userPanelAll = false;
 
   constructor(private chatService: ChatService, private router: Router) {}
 
@@ -47,6 +49,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.error('Unexpected user list format:', response);
       }
     });
+
+    this.chatService.getUserListAll().subscribe((response: any[]) => {
+      if(Array.isArray(response)){
+        this.userRecAll = response.map((user) => ({
+          name: user.name,
+          createdAt: user.createdAt,
+          state: user.state
+        }));
+      }
+      else{
+        console.error('Unexpected userAll list format', response);
+      }
+    })
 
   }
 
@@ -117,5 +132,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       counter.textContent = `Remaining: ${remainingChars}`;
       if (remainingChars < 0) counter.textContent = `Remaining: 0`;
     }
+  }
+
+  userPanelSwitchOnline(){
+    this.userPanelAll = false;
+    this.userPanelOnline = true;
+  }
+
+  userPanelSwitchAll(){
+    this.userPanelOnline = false;
+    this.userPanelAll = true;
   }
 }

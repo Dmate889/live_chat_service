@@ -58,4 +58,11 @@ export class ChatService {
       map(msg => msg.users) 
     );
   }
+
+  getUserListAll(){
+    return this.socket$.asObservable().pipe(
+      filter(msg => msg.type === 'userListAll'),
+      map(msg => msg.users)
+    );
+  }
 }
