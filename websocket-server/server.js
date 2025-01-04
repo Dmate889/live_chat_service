@@ -108,7 +108,7 @@ server.on("connection", (ws, req) => {
     }
     
     const userListAll = users.map((user) => ({
-      name: Buffer.isBuffer(user.name) ? user.name.toString() : user.name,
+      name: user.name,
       createdAt: user.createdAt,
       state: user.state
     }));
@@ -181,7 +181,7 @@ server.on("connection", (ws, req) => {
       }
 
       const userList = users.map((user) => ({
-        name: Buffer.isBuffer(user.name) ? user.name.toString() : user.name,
+        name: user.name,
         createdAt: user.createdAt,
       }));
 
@@ -196,7 +196,32 @@ server.on("connection", (ws, req) => {
         }
       });
     });
+
+    db.getUserRecordsAll((err, users) => {
+      if(err){
+        console.log('Error fetching users' + err);
+        return;
+      }
+      
+      const userListAll = users.map((user) => ({
+        name: user.name,
+        createdAt: user.createdAt,
+        state: user.state
+      }));
+  
+      server.clients.forEach((client) => {
+        if(client.readyState === WebSocket.OPEN) {
+          client.send(
+            JSON.stringify({
+              type: "userListAll",
+              users: userListAll
+            })
+          )
+        }
+      })
+    })
   });
+  
 });
 
 console.log("Websocket server is running on port 8080");
