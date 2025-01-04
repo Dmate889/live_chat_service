@@ -223,6 +223,14 @@ button:hover {
   right: 15px;
 }
 
+.online{
+  background-color: lightgreen;
+}
+
+.offline{
+  background-color: rgb(238, 89, 89);
+}
+
 .noUsers{
   font-family: monospace;
   display: flex;

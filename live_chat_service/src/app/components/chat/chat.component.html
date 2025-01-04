@@ -26,7 +26,7 @@
     <h1 class="userh1">Registered users</h1>
     <div class="userContainer">
       <div class="noUsers" *ngIf="userRecAll.length === 0">No users registered</div>
-        <div *ngFor="let user of userRecAll" class="userRecord">
+        <div *ngFor="let user of userRecAll" class="userRecord" [ngClass]="{'online': user.state === 'online', 'offline': user.state === 'offline'}">
           <div class="userName">{{user.name}}</div>
           <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
           <div class="userState">{{user.state}}</div>
