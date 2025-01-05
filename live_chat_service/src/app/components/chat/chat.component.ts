@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
@@ -22,7 +23,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   userPanelOnline = true;
   userPanelAll = false;
 
-  constructor(protected chatService: ChatService, protected router: Router) {}
+  constructor(protected chatService: ChatService, protected router: Router, protected http: HttpClient) {}
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: any) => {
@@ -62,7 +63,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.error('Unexpected userAll list format', response);
       }
     })
-
   }
 
   ngAfterViewChecked() {
@@ -150,5 +150,10 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   navigateToUserPanel(e: any){
     this.router.navigate(['/userPanel']);
+  }
+
+  getUsersInfo(){
+    const apiUrl = 'http://localhost:3000/auth/query';
+    return this.http.get(apiUrl);
   }
 }

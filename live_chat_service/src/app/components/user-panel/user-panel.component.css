@@ -48,6 +48,7 @@ body{
   
   .userh1{
     font-family: monospace;
+    color: white;
   }
   
   .userRecord{
@@ -110,6 +111,7 @@ body{
     .userButtons button {
       font-size: 12px;
       padding: 8px;
+      border-radius: 30px;
     }
   
     .userContainer {
