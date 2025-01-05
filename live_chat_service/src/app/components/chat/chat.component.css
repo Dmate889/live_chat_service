@@ -354,11 +354,11 @@ button:hover {
   }
 
   .userPanelButton{
-    position: absolute;
-    top: 0px;
-    left: 115px;
-    right: 100px;
-    width: 30%;
+    width: 100%;
+  }
+
+  .maxChars{
+    display: none;
   }
 
   

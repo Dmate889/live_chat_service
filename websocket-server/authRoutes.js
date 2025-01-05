@@ -40,4 +40,53 @@ router.post('/register', (req, res) => {
         });   
   });
 
+
+  router.get('/query', (req, res) => {
+    let usersOnline = [];
+    let usersAll = [];
+
+    db.getUsersRecord('online', (err, onlineUsers) => {
+        if (err) {
+            console.log('Error fetching online users:', err);
+            return res.status(500).json({ message: 'Error fetching online users' });
+        }
+
+        usersOnline = onlineUsers;
+
+        db.getUserRecordsAll((err, allUsers) => {
+            if (err) {
+                console.log('Error fetching all users:', err);
+                return res.status(500).json({ message: 'Error fetching all users' });
+            }
+
+            usersAll = allUsers;
+
+            res.status(200).json({
+                message: 'Users fetched successfully',
+                onlineUsers: usersOnline,
+                allUsers: usersAll
+            });
+        });
+    });
+});
+
+
+    router.get('/messages', (req,res) => {
+        let newMessages = [];
+
+        db.getMessages((err, messages) =>{
+            if(err){
+                console.log('Error fetching messages', err);
+                return res.status(500).json({message: 'Error fetching all users'});
+            }
+            
+            newMessages = messages;
+            res.status(200).json({
+                message: 'Messages are fetched',
+                newMessages : newMessages
+            });
+        });             
+    });
+
+
   module.exports = router;

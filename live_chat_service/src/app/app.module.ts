@@ -9,6 +9,7 @@ import { DisconnectedComponent } from './components/disconnected/disconnected.co
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
 
 
 
@@ -20,6 +21,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     DisconnectedComponent,
     LoginPageComponent,
     RegisterPageComponent,
+    UserPanelComponent,
   ],
   imports: [
     BrowserModule,
