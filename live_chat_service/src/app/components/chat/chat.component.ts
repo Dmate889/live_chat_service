@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   userPanelOnline = true;
   userPanelAll = false;
 
-  constructor(private chatService: ChatService, private router: Router) {}
+  constructor(protected chatService: ChatService, protected router: Router) {}
 
   ngOnInit() {
     this.chatService.getMessages().subscribe((message: any) => {
