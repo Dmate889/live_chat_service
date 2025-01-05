@@ -3,6 +3,7 @@ import { ChatService } from '../../services/chat.service';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-chat',
@@ -63,6 +64,17 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         console.error('Unexpected userAll list format', response);
       }
     })
+
+    this.getMesagesAgain().subscribe((response: any) => {
+      this.messages = response.newMessages.map((message: any) => ({
+        content: message.content,
+        sender: message.sender,
+        timestamp: new Date(message.timestamp) 
+      }));
+    }, error => {
+      console.error('Error fetching messages again:', error);
+    });
+
   }
 
   ngAfterViewChecked() {
@@ -154,6 +166,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   getUsersInfo(){
     const apiUrl = 'http://localhost:3000/auth/query';
+    return this.http.get(apiUrl);
+  }
+
+  getMesagesAgain(){
+    const apiUrl = 'http://localhost:3000/auth/messages';
     return this.http.get(apiUrl);
   }
 }
