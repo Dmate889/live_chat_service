@@ -62,6 +62,9 @@
           <button type="button" (click)="disconnectUser($event)">Logout</button>
           <button type="submit" (click)="sendMessage($event)">Send</button>
           <label id="maxChars">Remaining: 255</label>
-    </div>
-  </div>
+          <div *ngIf ="isSmallScreen()">
+            <button class="userPanelButton" (click)="navigateToUserPanel($event)" >Show users</button>
+          </div>
+        </div>
+      </div>
 </div>

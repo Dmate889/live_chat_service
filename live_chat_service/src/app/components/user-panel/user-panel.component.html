@@ -1,0 +1,35 @@
+
+    <ng-container *ngIf="userPanelOnline === true">
+        <div class="userPanel">
+          <div class="userButtons">
+            <button (click)="userPanelSwitchOnline()">Online users</button>
+            <button (click)="userPanelSwitchAll()">All users</button>
+          </div>
+          <h1 class="userh1">Online users</h1>
+          <div class="userContainer">
+            <div class="noUsers" *ngIf="userRec.length === 0">No online users</div>
+              <div *ngFor="let user of userRec" class="userRecord">
+                <div class="userName">{{user.name}}</div>
+                <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
+              </div>
+          </div>
+        </div>
+      </ng-container>
+    
+    <ng-container *ngIf="userPanelAll === true">
+      <div class="userPanel">
+        <div class="userButtons">
+          <button (click)="userPanelSwitchOnline()">Online users</button>
+          <button (click)="userPanelSwitchAll()">All users</button>
+        </div>
+        <h1 class="userh1">Registered users</h1>
+        <div class="userContainer">
+          <div class="noUsers" *ngIf="userRecAll.length === 0">No users registered</div>
+            <div *ngFor="let user of userRecAll" class="userRecord" [ngClass]="{'online': user.state === 'online', 'offline': user.state === 'offline'}">
+              <div class="userName">{{user.name}}</div>
+              <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
+              <div class="userState">{{user.state}}</div>
+            </div>
+        </div>
+      </div>
+    </ng-container>

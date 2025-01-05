@@ -143,4 +143,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.userPanelOnline = false;
     this.userPanelAll = true;
   }
+
+  isSmallScreen(){
+    return window.innerWidth <= 1024;
+  }
+
+  navigateToUserPanel(e: any){
+    this.router.navigate(['/userPanel']);
+  }
 }

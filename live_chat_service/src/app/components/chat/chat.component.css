@@ -351,6 +351,16 @@ button:hover {
   .userPanel{
     display: none;
   }
+
+  .userPanelButton{
+    position: absolute;
+    bottom: 100px;
+    left: 100px;
+    right: 100px;
+    max-width: 100vh;
+  }
+
+  
 }
 
 
