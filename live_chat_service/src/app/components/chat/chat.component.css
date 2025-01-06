@@ -107,7 +107,7 @@ input:hover {
 
 button {
   flex: 1;
-  max-width: 100px;
+  max-width: 150px;
   padding: 10px;
   font-size: 14px;
   font-family: monospace;
