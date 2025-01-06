@@ -362,7 +362,9 @@ button:hover {
     display: none;
   }
 
-  
+  .smiley-dropdown{
+    display: none;
+  }  
 }
 
 
