@@ -8,7 +8,7 @@
       </div>
       <h1 class="userh1">Online users</h1>
       <div class="userContainer">
-        <div class="noUsers" *ngIf="userRec.length === 0">No online users</div>
+        <div class="noUsers" *ngIf="userRec.length === 0">No Online users</div>
           <div *ngFor="let user of userRec" class="userRecord">
             <div class="userName">{{user.name}}</div>
             <div class="registered">Registered: {{user.createdAt | date: 'short'}}</div>
@@ -50,15 +50,15 @@
           <input  [(ngModel)]="newMessage" type="text" autocomplete="off" placeholder="Type your message..." name="message" id="message" (input)="characterCounter()">
         </form>
         <div class="buttons">
-          <div class="smiley-dropdown" (click)="toggleSmileyDropdown()">😊</div>
-          <div class="smiley-icons" *ngIf="showSmileyDropdown">
-            <span (click)="addSmiley('😊')">😊</span>
-            <span (click)="addSmiley('😂')">😂</span>
-            <span (click)="addSmiley('😍')">😍</span>
-            <span (click)="addSmiley('🤔')">🤔</span>
-            <span (click)="addSmiley('👍')">👍</span>
-            <span (click)="addSmiley('💀')">💀</span>
-          </div>
+            <div class="smiley-dropdown" (click)="toggleSmileyDropdown()">😊</div>
+            <div class="smiley-icons" *ngIf="showSmileyDropdown">
+              <span (click)="addSmiley('😊')">😊</span>
+              <span (click)="addSmiley('😂')">😂</span>
+              <span (click)="addSmiley('😍')">😍</span>
+              <span (click)="addSmiley('🤔')">🤔</span>
+              <span (click)="addSmiley('👍')">👍</span>
+              <span (click)="addSmiley('💀')">💀</span>
+            </div>
           <button type="button" (click)="disconnectUser($event)">Logout</button>
           <button type="submit" (click)="sendMessage($event)">Send</button>
           <label class="maxChars" id="maxChars">Remaining: 255</label>
