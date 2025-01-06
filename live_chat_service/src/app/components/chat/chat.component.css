@@ -107,7 +107,7 @@ input:hover {
 
 button {
   flex: 1;
-  max-width: 120px;
+  max-width: 100px;
   padding: 10px;
   font-size: 14px;
   font-family: monospace;
@@ -354,7 +354,7 @@ button:hover {
   }
 
   .userPanelButton{
-    width: 100%;
+    width: 80%;
   }
 
   .maxChars{
