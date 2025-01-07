@@ -18,6 +18,31 @@ export class UserPanelComponent extends ChatComponent implements OnInit{
  }
 
  override ngOnInit(): void {
+
+  this.chatService.getUserList().subscribe((response: any[]) => {
+    if (Array.isArray(response)) {
+      this.userRec = response.map((user) => ({
+        name: user.name,
+        createdAt: user.createdAt,
+      }));
+    } else {
+      console.error('Unexpected user list format:', response);
+    }
+  });
+
+  this.chatService.getUserListAll().subscribe((response: any[]) => {
+    if(Array.isArray(response)){
+      this.userRecAll = response.map((user) => ({
+        name: user.name,
+        createdAt: user.createdAt,
+        state: user.state
+      }));
+    }
+    else{
+      console.error('Unexpected userAll list format', response);
+    }
+  })
+
   super.getUsersInfo().subscribe({
     next: (response: any) => {
       this.userRec = response.onlineUsers.map((user: any) => ({
