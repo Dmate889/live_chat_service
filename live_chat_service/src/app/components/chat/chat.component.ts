@@ -47,10 +47,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           name: user.name,
           createdAt: user.createdAt,
         }));
+
       } else {
         console.error('Unexpected user list format:', response);
       }
     });
+
+    
+    // if(this.userRec.length > 0){
+    //   this.userRec.map((user) =>{
+    //     console.log('The array on frontend: '+ user)
+    //   })
+    // }
+    // else console.log('The array is empty');
+
 
     this.chatService.getUserListAll().subscribe((response: any[]) => {
       if(Array.isArray(response)){
@@ -74,7 +84,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }, error => {
       console.error('Error fetching messages again:', error);
     });
-
   }
 
   ngAfterViewChecked() {

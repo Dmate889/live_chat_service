@@ -55,14 +55,14 @@ export class ChatService {
   getUserList() {
     return this.socket$.asObservable().pipe(
       filter(msg => msg.type === 'userList'),
-      map(msg => msg.users) 
+      map(msg => msg.users),
     );
   }
 
   getUserListAll(){
     return this.socket$.asObservable().pipe(
       filter(msg => msg.type === 'userListAll'),
-      map(msg => msg.users)
+      map(msg => msg.users),
     );
   }
 }

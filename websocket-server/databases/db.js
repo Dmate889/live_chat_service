@@ -89,40 +89,52 @@ function getMessages(callback) {
 }
 
 //Getting the online users from the users table
-function getUsersRecord(state, callback) {
-  const query = "SELECT name, createdAt FROM users WHERE state = ?";
+function getUsersRecord(state) {
 
-  db.all(query, [state], (err, rows) => {
-    if (err) {
-      console.log(`There was a fetching users with ${query}`, err);
-      return callback(err);
-    } else {
-      callback(null, rows);
-    }
+  return new Promise((resolve, reject) => {
+    const query = "SELECT name, createdAt FROM users WHERE state = ?";
+  
+    db.all(query, [state], (err, rows) => {
+      if (err) {
+        console.error(`There was a fetching users with ${query}`, err);
+        reject(err);
+      } else {
+        resolve(rows);
+        }
+    });
   });
 }
 
-function getUserRecordsAll(callback){
-  const query = "SELECT name, createdAt, state FROM users";
+function getUserRecordsAll(){
 
-  db.all(query, [], (err, rows)=>{
-    if(err){
-      console.log(`There was a problem fetching users with ${query}`, err);
-    }
-    else callback(null,rows);
+  return new Promise((resolve, reject) => {
+    const query = "SELECT name, createdAt, state FROM users";
+  
+    db.all(query, [], (err, rows)=>{
+      if(err){
+        console.log(`There was a problem fetching users with ${query}`, err);
+        reject(err);
+      }
+      else {
+        resolve(rows);
+      }
+    });
   });
 }
 
-function setStateUsersOnline(name, callback) {
-  const query = "UPDATE users SET state = ? WHERE name = ?";
-
-  db.run(query, ["online", name], (err) => {
-    if (err) {
-      console.log(`There was a problem with ${query}` + err);
-      return callback(err);
-    } else {
-      console.log(`${name} is now online.`);
-    }
+function setStateUsersOnline(name) {
+  return new Promise((resolve, reject) => {
+    const query = "UPDATE users SET state = ? WHERE name = ?";
+  
+    db.run(query, ["online", name], (err) => {
+      if (err) {
+        console.log(`There was a problem with ${query}` + err);
+        reject(err);
+      } else {
+        console.log(`${name} is now online.`);
+        resolve();
+      }
+    });
   });
 }
 

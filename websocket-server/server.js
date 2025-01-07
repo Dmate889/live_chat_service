@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const express = require("express");
 const cors = require("cors");
 const authRoutes = require("./authRoutes");
+const { fetchUsers } = require("./server_logic");
 
 const app = express();
 
@@ -39,7 +40,7 @@ function verifyToken(token) {
 }
 
 //Connecting to WS, and iterating through the messages
-server.on("connection", (ws, req) => {
+server.on("connection", async (ws, req) => {
   const token = new URL(req.url, `http://${req.headers.host}`).searchParams.get(
     "token"
   );
@@ -56,7 +57,8 @@ server.on("connection", (ws, req) => {
     return;
   }
 
-  db.setStateUsersOnline(user.name);
+  await db.setStateUsersOnline(user.name);
+  fetchUsers(server);
 
   //Making the messages visible from the DB on the UI
   db.getMessages((err, messages) => {
@@ -76,54 +78,6 @@ server.on("connection", (ws, req) => {
       });
     }
   });
-
-  //Sending the online users data to FE
-  db.getUsersRecord("online", (err, users) => {
-    if (err) {
-      console.log("Error fetching users:", err);
-      return;
-    }
-
-    const userList = users.map((user) => ({
-      name: user.name,
-      createdAt: user.createdAt,
-    }));
-
-    server.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(
-          JSON.stringify({
-            type: "userList",
-            users: userList
-          })
-        );
-      }
-    });
-  });
-
-  db.getUserRecordsAll((err, users) => {
-    if(err){
-      console.log('Error fetching users' + err);
-      return;
-    }
-    
-    const userListAll = users.map((user) => ({
-      name: user.name,
-      createdAt: user.createdAt,
-      state: user.state
-    }));
-
-    server.clients.forEach((client) => {
-      if(client.readyState === WebSocket.OPEN) {
-        client.send(
-          JSON.stringify({
-            type: "userListAll",
-            users: userListAll
-          })
-        )
-      }
-    })
-  })
 
   ws.messageCount = 0;
   ws.startTime = Date.now();
@@ -174,52 +128,7 @@ server.on("connection", (ws, req) => {
   //Disconnect client from WS and run new query of online users to send it to FE
   ws.on("close", () => {
     db.setStateUsersOffline(user.name);
-    db.getUsersRecord("online", (err, users) => {
-      if (err) {
-        console.log("Error fetching users:", err);
-        return;
-      }
-
-      const userList = users.map((user) => ({
-        name: user.name,
-        createdAt: user.createdAt,
-      }));
-
-      server.clients.forEach((client) => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(
-            JSON.stringify({
-              type: "userList",
-              users: userList,
-            })
-          );
-        }
-      });
-    });
-
-    db.getUserRecordsAll((err, users) => {
-      if(err){
-        console.log('Error fetching users' + err);
-        return;
-      }
-      
-      const userListAll = users.map((user) => ({
-        name: user.name,
-        createdAt: user.createdAt,
-        state: user.state
-      }));
-  
-      server.clients.forEach((client) => {
-        if(client.readyState === WebSocket.OPEN) {
-          client.send(
-            JSON.stringify({
-              type: "userListAll",
-              users: userListAll
-            })
-          )
-        }
-      })
-    })
+    fetchUsers(server);
   });
   
 });
