@@ -3,7 +3,7 @@ const db = require("./databases/db");
 const WebSocket = require("ws");
 
 
-async function fetchUsers(server){
+async function fetchUsers(server,ws){
     try{
       const onlineUsers = await db.getUsersRecord('online');
       
@@ -15,7 +15,7 @@ async function fetchUsers(server){
      
       server.clients.forEach(client => {
         if(client.readyState  === WebSocket.OPEN){
-          client.send(
+          ws.send(
             JSON.stringify({
               type: 'userList',
               users: userList
@@ -34,7 +34,7 @@ async function fetchUsers(server){
 
       server.clients.forEach(client => {
         if(client.readyState  === WebSocket.OPEN){
-          client.send(
+          ws.send(
             JSON.stringify({
               type: 'userListAll',
               users: userListAll

@@ -58,7 +58,7 @@ server.on("connection", async (ws, req) => {
   }
 
   await db.setStateUsersOnline(user.name);
-  fetchUsers(server);
+  fetchUsers(server, ws);
 
   //Making the messages visible from the DB on the UI
   db.getMessages((err, messages) => {
@@ -128,7 +128,7 @@ server.on("connection", async (ws, req) => {
   //Disconnect client from WS and run new query of online users to send it to FE
   ws.on("close", () => {
     db.setStateUsersOffline(user.name);
-    fetchUsers(server);
+    fetchUsers(server, ws);
   });
   
 });
