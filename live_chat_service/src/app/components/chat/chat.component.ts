@@ -3,7 +3,7 @@ import { ChatService } from '../../services/chat.service';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { timestamp } from 'rxjs';
+
 
 @Component({
   selector: 'app-chat',
@@ -38,8 +38,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           timestamp: message.timestamp,
         });
       }
-      this.newMessage = '';
     });
+
 
     this.chatService.getUserList().subscribe((response: any[]) => {
       if (Array.isArray(response)) {
@@ -53,14 +53,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     });
 
-    
-    // if(this.userRec.length > 0){
-    //   this.userRec.map((user) =>{
-    //     console.log('The array on frontend: '+ user)
-    //   })
-    // }
-    // else console.log('The array is empty');
-
 
     this.chatService.getUserListAll().subscribe((response: any[]) => {
       if(Array.isArray(response)){
@@ -69,6 +61,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           createdAt: user.createdAt,
           state: user.state
         }));
+
+        
       }
       else{
         console.error('Unexpected userAll list format', response);
@@ -81,6 +75,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         sender: message.sender,
         timestamp: new Date(message.timestamp) 
       }));
+
+      
     }, error => {
       console.error('Error fetching messages again:', error);
     });
@@ -128,6 +124,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     this.chatService.sendMessage(JSON.stringify(message));
     this.lastMessageTimestamp = currentTime;
+    this.newMessage = '';
     this.scrollToBottom();
   }
 

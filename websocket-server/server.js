@@ -1,36 +1,14 @@
 //This is the WebSocket server written in Node.js
+const app = require("./app_config");
 const WebSocket = require("ws");
 const db = require("./databases/db");
 const jwt = require("jsonwebtoken");
-const express = require("express");
-const cors = require("cors");
-const authRoutes = require("./authRoutes");
 const {
   fetchUsers,
   fetchMessages,
   insertMessages,
   verifyToken,
 } = require("./server_logic");
-
-const app = express();
-
-//Middlewares & routes
-app.use(express.json());
-
-const allowedOrigins = "http://localhost:4200";
-const corsOptions = {
-  origin: allowedOrigins,
-  methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Authorization", "Content-Type"],
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
-app.use("/auth", authRoutes);
-
-app.listen(3000, () => {
-  console.log("Express server is running on port 3000");
-});
 
 const server = new WebSocket.Server({ port: 8080 });
 
@@ -40,15 +18,15 @@ server.on("connection", async (ws, req) => {
     "token"
   );
 
+  const user = verifyToken(token, jwt);
+
   if (!token) {
     ws.close(4001, "No token provided");
     return;
   }
 
-  const user = verifyToken(token, jwt);
-
   if (!user) {
-    ws.close(4002, "Invalid token");
+    ws.close(4002, "Invalid JWT token");
     return;
   }
 
@@ -62,7 +40,6 @@ server.on("connection", async (ws, req) => {
   ws.messageCount = 0;
   ws.startTime = Date.now();
 
-  //Sending the message to all clients + spam protection. If the message limit(5) has been exceeded, the client will be disconnected
   ws.on("message", (message) => {
     //Inserting the message into the DB, and sending it out to all the clients
     insertMessages(ws, server, message, user);

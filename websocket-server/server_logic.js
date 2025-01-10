@@ -1,4 +1,4 @@
-const { all } = require("./authRoutes");
+//Helper file for server logic
 const db = require("./databases/db");
 const WebSocket = require("ws");
 
@@ -124,5 +124,5 @@ async function fetchUsers(server,ws){
     fetchUsers,
     fetchMessages,
     verifyToken,
-    insertMessages
+    insertMessages,
   };

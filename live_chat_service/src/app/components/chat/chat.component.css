@@ -246,6 +246,10 @@ button:hover {
   justify-content: center;
 }
 
+.maxChars{
+  font-weight: 700;
+}
+
 @container (max-width: 768px) {
   .chat-box {
     width: 95%;
