@@ -27,7 +27,7 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { ChatService } from '../../services/chat.service';
 import { Router } from '@angular/router';
 import { ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Chat_component_logic } from './chat_component_logic';
 
 
 @Component({
@@ -19,70 +20,21 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   userRecAll: {name: string; createdAt: Date; state: string}[] = [];
   newMessage: string = '';
   lastMessageTimestamp: number = 0;
+  currentTime: number = Date.now();
   cooldownTime: number = 300;
   showSmileyDropdown = false;
   userPanelOnline = true;
   userPanelAll = false;
 
-  constructor(protected chatService: ChatService, protected router: Router, protected http: HttpClient) {}
+  constructor(protected chatService: ChatService, protected router: Router, protected http: HttpClient, protected chatLogic: Chat_component_logic) {}
 
   ngOnInit() {
-    this.chatService.getMessages().subscribe((message: any) => {
-      if (message.content) {
-        this.messages.push({
-          content:
-            typeof message.content === 'object'
-              ? JSON.stringify(message.content)
-              : message.content,
-          sender: message.sender,
-          timestamp: message.timestamp,
-        });
-      }
-    });
 
-
-    this.chatService.getUserList().subscribe((response: any[]) => {
-      if (Array.isArray(response)) {
-        this.userRec = response.map((user) => ({
-          name: user.name,
-          createdAt: user.createdAt,
-        }));
-
-      } else {
-        console.error('Unexpected user list format:', response);
-      }
-    });
-
-
-    this.chatService.getUserListAll().subscribe((response: any[]) => {
-      if(Array.isArray(response)){
-        this.userRecAll = response.map((user) => ({
-          name: user.name,
-          createdAt: user.createdAt,
-          state: user.state
-        }));
-
-        
-      }
-      else{
-        console.error('Unexpected userAll list format', response);
-      }
-    })
-
-    this.getMesagesAgain().subscribe((response: any) => {
-      this.messages = response.newMessages.map((message: any) => ({
-        content: message.content,
-        sender: message.name,
-        timestamp: message.timestamp
-      }));
-
-     
-
-      
-    }, error => {
-      console.error('Error fetching messages again:', error);
-    });
+    this.chatLogic.getChatMessages(this.messages, this.chatService);
+    this.chatLogic.getChatUsers(this.userRec, this.userRecAll, this.chatService);
+    this.chatLogic.getMessgaesFromEndpoint(this.messages);
   }
+
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -100,32 +52,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   //The messages that we send to the WS server
   sendMessage(event: Event) {
     event.preventDefault();
-    const currentTime = Date.now();
 
-    //Spam protection
-    if (currentTime - this.lastMessageTimestamp < this.cooldownTime)
-      return alert(
-        'If you keep spamming, you will be disconnected from the server'
-      );
-
-    //if the message is empty, it can not be sent
-    if (this.newMessage.trim() === '') {
-      alert("You can't send empty messages.");
-      return;
-    }
-
-    if (this.newMessage.length > 255) {
-      alert('You have reached the character limit of 255');
-      return;
-    }
-
-    const message = {
-      content: this.newMessage,
-      timestamp: currentTime,
-    };
-
-    this.chatService.sendMessage(JSON.stringify(message));
-    this.lastMessageTimestamp = currentTime;
+    this.chatLogic.sendChatMessages(this.currentTime,this.lastMessageTimestamp,this.cooldownTime,this.newMessage,this.chatService)
     this.newMessage = '';
     this.scrollToBottom();
   }
@@ -170,15 +98,5 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   navigateToUserPanel(e: any){
     this.router.navigate(['/userPanel']);
-  }
-
-  getUsersInfo(){
-    const apiUrl = 'http://localhost:3000/auth/query';
-    return this.http.get(apiUrl);
-  }
-
-  getMesagesAgain(){
-    const apiUrl = 'http://localhost:3000/auth/messages';
-    return this.http.get(apiUrl);
   }
 }

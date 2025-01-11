@@ -3,6 +3,7 @@ import { ChatComponent } from '../chat/chat.component';
 import { Router } from '@angular/router';
 import { ChatService } from '../../services/chat.service';
 import { HttpClient } from '@angular/common/http';
+import { Chat_component_logic } from '../chat/chat_component_logic';
 
 @Component({
   selector: 'app-user-panel',
@@ -13,53 +14,13 @@ export class UserPanelComponent extends ChatComponent implements OnInit{
  override userRec: { name: string; createdAt: Date }[] = [];
  override userRecAll: {name: string; createdAt: Date; state: string}[] = [];
 
- constructor(override chatService: ChatService, override router: Router, override http: HttpClient){
-   super(chatService, router, http);
+ constructor(override chatService: ChatService, override router: Router, override http: HttpClient, chatLogic: Chat_component_logic){
+   super(chatService, router, http, chatLogic);
  }
 
  override ngOnInit(): void {
 
-  this.chatService.getUserList().subscribe((response: any[]) => {
-    if (Array.isArray(response)) {
-      this.userRec = response.map((user) => ({
-        name: user.name,
-        createdAt: user.createdAt,
-      }));
-    } else {
-      console.error('Unexpected user list format:', response);
-    }
-  });
-
-  this.chatService.getUserListAll().subscribe((response: any[]) => {
-    if(Array.isArray(response)){
-      this.userRecAll = response.map((user) => ({
-        name: user.name,
-        createdAt: user.createdAt,
-        state: user.state
-      }));
-    }
-    else{
-      console.error('Unexpected userAll list format', response);
-    }
-  })
-
-  super.getUsersInfo().subscribe({
-    next: (response: any) => {
-      this.userRec = response.onlineUsers.map((user: any) => ({
-        name: user.name,
-        createdAt: new Date(user.createdAt),
-      }));
-
-      this.userRecAll = response.allUsers.map((user: any) => ({
-        name: user.name,
-        createdAt: new Date(user.createdAt),
-        state: user.state,
-      }));
-    },
-    error: (err: any) => {
-      console.error('Error fetching user data:', err);
-    },
-  });
+  this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll);
 }
 
 //Implemented methods, so this component will not deal with the ngAfterVewChecked which is part of the parent class
