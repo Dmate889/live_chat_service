@@ -72,9 +72,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.getMesagesAgain().subscribe((response: any) => {
       this.messages = response.newMessages.map((message: any) => ({
         content: message.content,
-        sender: message.sender,
-        timestamp: new Date(message.timestamp) 
+        sender: message.name,
+        timestamp: message.timestamp
       }));
+
+     
 
       
     }, error => {
