@@ -41,33 +41,20 @@ router.post('/register', (req, res) => {
   });
 
 
-  router.get('/query', (req, res) => {
-    let usersOnline = [];
-    let usersAll = [];
+  router.get('/query', async (req, res) => {
+    try {
+        const usersOnline = await db.getUsersRecord('online');
+        const usersAll = await db.getUserRecordsAll();
 
-    db.getUsersRecord('online', (err, onlineUsers) => {
-        if (err) {
-            console.log('Error fetching online users:', err);
-            return res.status(500).json({ message: 'Error fetching online users' });
-        }
-
-        usersOnline = onlineUsers;
-
-        db.getUserRecordsAll((err, allUsers) => {
-            if (err) {
-                console.log('Error fetching all users:', err);
-                return res.status(500).json({ message: 'Error fetching all users' });
-            }
-
-            usersAll = allUsers;
-
-            res.status(200).json({
-                message: 'Users fetched successfully',
-                onlineUsers: usersOnline,
-                allUsers: usersAll
-            });
+        res.status(200).json({
+            message: 'Users fetched successfully',
+            onlineUsers: usersOnline,
+            allUsers: usersAll
         });
-    });
+    } catch (err) {
+        console.log('Error fetching users:', err);
+        res.status(500).json({ message: 'Error fetching users' });
+    }
 });
 
 

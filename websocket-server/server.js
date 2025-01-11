@@ -32,7 +32,7 @@ server.on("connection", async (ws, req) => {
 
   //Set users' state online and
   await db.setStateUsersOnline(user.name);
-  fetchUsers(server, ws);
+  fetchUsers(server);
 
   //Making the messages visible from the DB on the UI
   fetchMessages(ws);
@@ -48,7 +48,7 @@ server.on("connection", async (ws, req) => {
   //Disconnect client from WS and run new query of online users to send it to FE
   ws.on("close", () => {
     db.setStateUsersOffline(user.name);
-    fetchUsers(server, ws);
+    fetchUsers(server);
   });
 });
 

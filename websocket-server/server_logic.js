@@ -3,7 +3,7 @@ const db = require("./databases/db");
 const WebSocket = require("ws");
 
 
-async function fetchUsers(server,ws){
+async function fetchUsers(server){
     try{
       const onlineUsers = await db.getUsersRecord('online');
   
