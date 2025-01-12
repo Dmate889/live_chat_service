@@ -25,22 +25,30 @@ export class Chat_component_logic {
   getChatUsers(userRec: any[], userRecAll: any[], chatService: any) {
     chatService.getUserList().subscribe((response: any[]) => {
       if (Array.isArray(response)) {
-        userRec.splice(0, userRec.length, ...response.map((user) => ({
-          name: user.name,
-          createdAt: user.createdAt,
-        })));
+        userRec.splice(
+          0,
+          userRec.length,
+          ...response.map((user) => ({
+            name: user.name,
+            createdAt: user.createdAt,
+          }))
+        );
       } else {
         console.error('Unexpected user list format:', response);
       }
     });
-  
+
     chatService.getUserListAll().subscribe((response: any[]) => {
       if (Array.isArray(response)) {
-        userRecAll.splice(0, userRecAll.length, ...response.map((user) => ({
-          name: user.name,
-          createdAt: user.createdAt,
-          state: user.state,
-        })));
+        userRecAll.splice(
+          0,
+          userRecAll.length,
+          ...response.map((user) => ({
+            name: user.name,
+            createdAt: user.createdAt,
+            state: user.state,
+          }))
+        );
       } else {
         console.error('Unexpected userAll list format:', response);
       }
@@ -64,14 +72,24 @@ export class Chat_component_logic {
     );
   }
 
-  getMesagesAgain(){
+  getMesagesAgain() {
     const apiUrl = 'http://localhost:3000/auth/messages';
     return this.http.get(apiUrl);
   }
 
-  sendChatMessages(currentTime: any, lastMessageTimestamp:number, cooldownTime:number, newMessage: any, chatService: any){
-
-    this.spamProtection(currentTime, lastMessageTimestamp, cooldownTime, newMessage)
+  sendChatMessages(
+    currentTime: any,
+    lastMessageTimestamp: number,
+    cooldownTime: number,
+    newMessage: any,
+    chatService: any
+  ) {
+    this.spamProtection(
+      currentTime,
+      lastMessageTimestamp,
+      cooldownTime,
+      newMessage
+    );
 
     const message = {
       content: newMessage,
@@ -83,23 +101,28 @@ export class Chat_component_logic {
     newMessage = '';
   }
 
-  spamProtection(currentTime: any, lastMessageTimestamp: number, cooldownTime: number, newMessage: any){
+  spamProtection(
+    currentTime: any,
+    lastMessageTimestamp: number,
+    cooldownTime: number,
+    newMessage: any
+  ) {
     if (currentTime - lastMessageTimestamp < cooldownTime)
-        return alert(
-          'If you keep spamming, you will be disconnected from the server'
-        );
-      if (newMessage.trim() === '') {
-        alert("You can't send empty messages.");
-        return;
-      }
-  
-      if (newMessage.length > 255) {
-        alert('You have reached the character limit of 255');
-        return;
-      }
+      return alert(
+        'If you keep spamming, you will be disconnected from the server'
+      );
+    if (newMessage.trim() === '') {
+      alert("You can't send empty messages.");
+      return;
+    }
+
+    if (newMessage.length > 255) {
+      alert('You have reached the character limit of 255');
+      return;
+    }
   }
 
-  getUsersInfo(){
+  getUsersInfo() {
     const apiUrl = 'http://localhost:3000/auth/query';
     return this.http.get(apiUrl);
   }
@@ -115,7 +138,7 @@ export class Chat_component_logic {
             createdAt: new Date(user.createdAt),
           }))
         );
-  
+
         userRecAll.splice(
           0,
           userRecAll.length,
@@ -131,7 +154,4 @@ export class Chat_component_logic {
       },
     });
   }
-
 }
-
- 
