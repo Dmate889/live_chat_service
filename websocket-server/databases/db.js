@@ -19,7 +19,7 @@ db.run(
   "CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY, content TEXT, timestamp DATETIME, user_id INTEGER, FOREIGN KEY (user_id) REFERENCES users(id))"
 );
 db.run(
-  "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, role TEXT DEFAULT user, state TEXT DEFAULT offline )"
+  "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, password TEXT, createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, role TEXT DEFAULT user, state TEXT DEFAULT offline, isActive INTEGER DEFAULT 1)"
 );
 
 //Inserting new users into the DB

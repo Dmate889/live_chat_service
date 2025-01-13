@@ -10,6 +10,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { RegisterPageComponent } from './components/register-page/register-page.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 
 
@@ -22,6 +23,7 @@ import { UserPanelComponent } from './components/user-panel/user-panel.component
     LoginPageComponent,
     RegisterPageComponent,
     UserPanelComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
