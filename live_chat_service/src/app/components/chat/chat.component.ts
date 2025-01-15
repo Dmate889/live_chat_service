@@ -14,10 +14,9 @@ import { Chat_component_logic } from './chat_component_logic';
 export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messageContainer') private messageContainer!: ElementRef;
 
-  //The messages are stored in the messages array, coming from the backend and it will be processed in the static HTML
   messages: { content: string; sender: string; timestamp: Date }[] = [];
   userRec: { name: string; createdAt: Date }[] = [];
-  userRecAll: {name: string; createdAt: Date; state: string}[] = [];
+  userRecAll: {name: string; createdAt: Date; state: string, isActive: number}[] = [];
   newMessage: string = '';
   lastMessageTimestamp: number = 0;
   currentTime: number = Date.now();
@@ -29,8 +28,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   constructor(protected chatService: ChatService, protected router: Router, protected http: HttpClient, protected chatLogic: Chat_component_logic) {}
 
   ngOnInit() {
-
-    this.chatLogic.getChatMessages(this.messages, this.chatService);
+    // this.chatLogic.getChatMessages(this.messages, this.chatService);
     this.chatLogic.getChatUsers(this.userRec, this.userRecAll, this.chatService);
     this.chatLogic.getMessgaesFromEndpoint(this.messages);
     this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll);

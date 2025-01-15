@@ -1,11 +1,14 @@
 <div class="wrapper">
     <button (click)="navigateToChat()" class="backButton">Back To Chat</button>
     <div class="adminPanel">
-        <div class="userRecord">
-            <div class="userName">Máté</div>
-            <div class="userReg">Registered: 2024.10.20.</div>
-            <div class="userRole">Role: User</div>
-            <button class="userIsactive">Active</button>
+        <div class="userContainer">
+            <div class="nosUsers" *ngIf="userAll.length === 0">Loading Users...</div>
+            <div *ngFor="let user of userAll" class="userRecord">
+                <div class="userName">{{user.name}}</div>
+                <div class="userReg">Registered: {{user.createdAt | date: 'short'}}</div>
+                <div class="userRole">Role: {{user.state}}</div>
+                <button class="userIsactive" [ngClass]="{'active': user.isActive === 1, 'banned': user.isActive === 0}" id="buttonIsActive">Active</button>
+            </div>
         </div>
     </div>
 </div>

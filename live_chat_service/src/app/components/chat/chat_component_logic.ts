@@ -47,11 +47,16 @@ export class Chat_component_logic {
             name: user.name,
             createdAt: user.createdAt,
             state: user.state,
+            isActive: user.isActive
           }))
         );
       } else {
         console.error('Unexpected userAll list format:', response);
       }
+
+      userRecAll.map((user => {
+        console.log('The user object JSOn on frontend: '+ JSON.stringify(user));
+      }))
     });
   }
 
@@ -146,6 +151,7 @@ export class Chat_component_logic {
             name: user.name,
             createdAt: new Date(user.createdAt),
             state: user.state,
+            isActive: user.isActive
           }))
         );
       },

@@ -108,7 +108,7 @@ function getUsersRecord(state) {
 function getUserRecordsAll(){
 
   return new Promise((resolve, reject) => {
-    const query = "SELECT name, createdAt, state FROM users";
+    const query = "SELECT name, createdAt, state, isActive FROM users";
   
     db.all(query, [], (err, rows)=>{
       if(err){

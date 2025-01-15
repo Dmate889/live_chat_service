@@ -12,7 +12,7 @@ import { Chat_component_logic } from '../chat/chat_component_logic';
 })
 export class UserPanelComponent extends ChatComponent implements OnInit{
  override userRec: { name: string; createdAt: Date }[] = [];
- override userRecAll: {name: string; createdAt: Date; state: string}[] = [];
+ override userRecAll: {name: string; createdAt: Date; state: string, isActive: number}[] = [];
 
  constructor(override chatService: ChatService, override router: Router, override http: HttpClient, chatLogic: Chat_component_logic){
    super(chatService, router, http, chatLogic);
