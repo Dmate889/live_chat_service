@@ -33,6 +33,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.chatLogic.getChatMessages(this.messages, this.chatService);
     this.chatLogic.getChatUsers(this.userRec, this.userRecAll, this.chatService);
     this.chatLogic.getMessgaesFromEndpoint(this.messages);
+    this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll);
   }
 
 
@@ -98,5 +99,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   navigateToUserPanel(e: any){
     this.router.navigate(['/userPanel']);
+  }
+
+  navigateToAdminPanel(){
+    this.router.navigate(['/adminPanel']);
   }
 }
