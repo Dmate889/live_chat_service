@@ -40,13 +40,13 @@ async function authUsers(username, password, callback) {
 
 //Getting users from the DB
 async function getUsers(name, password, callback) {
-  const query = "SELECT id, name, password FROM users WHERE name = ?";
+  const query = "SELECT id, name, password, isActive FROM users WHERE name = ?";
   db.get(query, [name], async (err, row) => {
     if (err) {
       console.log("Could not fetch user: " + err);
       return callback(err);
     }
-    if (row && (await bcrypt.compare(password, row.password))) {
+    if (row && row.isActive === 1 && (await bcrypt.compare(password, row.password))) {
       const token = jwt.sign({ id: row.id, name: row.name }, JWT_SECRET, {
         expiresIn: "5h",
       });
