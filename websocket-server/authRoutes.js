@@ -75,7 +75,7 @@ router.post('/register', (req, res) => {
         });             
     });
 
-    router.patch('/isactive', (req, res) => {
+    router.post('/isactive', (req, res) => {
         const {userName, isActive} = req.body;
 
         db.setUserIsActive(userName, isActive, (err, result) =>{
