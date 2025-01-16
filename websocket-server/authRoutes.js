@@ -80,7 +80,7 @@ router.post('/register', (req, res) => {
 
         db.setUserIsActive(userName, isActive, (err, result) =>{
             if(result.success){
-                res.status(200).json({message: 'User isActive change has been changed successfully' });
+                res.status(200).json({message: 'User isActive state has been changed successfully' });
             }
             else res.status(500).json({message: 'DB error when tried to change user isActive state'});
         });

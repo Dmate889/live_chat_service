@@ -16,6 +16,7 @@ export class AdminPanelComponent extends UserPanelComponent {
   dummyArray: any [] = [];
 
   userIsactive = true;
+  
 
  constructor(override chatService: ChatService, override router: Router, override http: HttpClient, chatLogic: Chat_component_logic){
     super(chatService, router, http, chatLogic);
@@ -29,24 +30,27 @@ export class AdminPanelComponent extends UserPanelComponent {
     this.router.navigate(['/chat']);
   }
 
-  //Building API endpoint for patching users isActive state
-  // setUserIsActive() {
-  //   const apiUrl = 'http://localhost:3000/auth/isactive';
-  //   return this.http.post(apiUrl, );
-  // }
+  setUserIsActive(userName: string, isActive: number) {
+    const apiUrl = 'http://localhost:3000/auth/isactive';
+    const body = {userName, isActive};
+    return this.http.post(apiUrl,body);
+  }
+
+  //Problem needs to be fixed: How to give the given record's username and isActive state to setUserIsactive - endpoint, and patch the isActive state real time on frontend and backend too. 
 
   //Mocking ban mechanism
   // banUsers(){
-  //   this.userIsactive = !this.userIsactive;
 
   //   const button = document.getElementById('buttonIsActive');
-
-  //   if(button && this.userIsactive){
-  //     button.textContent = 'Active';
-  //   }
+    
+  //   this.userIsactive = !this.userIsactive;
   //   if(button && this.userIsactive === false){
   //     button.textContent = 'Banned';
   //   }
+  //   else if(button && this.userIsactive === true){
+  //     button.textContent = 'Active';
+  //   }
+
   // }
 
 }

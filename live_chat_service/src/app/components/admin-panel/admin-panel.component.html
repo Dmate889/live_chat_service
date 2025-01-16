@@ -7,7 +7,7 @@
                 <div class="userName">{{user.name}}</div>
                 <div class="userReg">Registered: {{user.createdAt | date: 'short'}}</div>
                 <div class="userRole">Role: {{user.state}}</div>
-                <button class="userIsactive" [ngClass]="{'active': user.isActive === 1, 'banned': user.isActive === 0}" id="buttonIsActive">Active</button>
+                <button class="userIsactive" [ngClass]="{'active': user.isActive === 1, 'banned': user.isActive === 0}" id="buttonIsActive">{{user.isActive === 1 ? 'Active' : 'Banned'}}</button>
             </div>
         </div>
     </div>
