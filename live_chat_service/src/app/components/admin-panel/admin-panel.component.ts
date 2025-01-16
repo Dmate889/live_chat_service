@@ -29,6 +29,12 @@ export class AdminPanelComponent extends UserPanelComponent {
     this.router.navigate(['/chat']);
   }
 
+  //Building API endpoint for patching users isActive state
+  // setUserIsActive() {
+  //   const apiUrl = 'http://localhost:3000/auth/isactive';
+  //   return this.http.post(apiUrl, );
+  // }
+
   //Mocking ban mechanism
   // banUsers(){
   //   this.userIsactive = !this.userIsactive;

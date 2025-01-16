@@ -28,12 +28,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   constructor(protected chatService: ChatService, protected router: Router, protected http: HttpClient, protected chatLogic: Chat_component_logic) {}
 
   ngOnInit() {
-    // this.chatLogic.getChatMessages(this.messages, this.chatService);
+    this.chatLogic.getChatMessages(this.messages, this.chatService);
     this.chatLogic.getChatUsers(this.userRec, this.userRecAll, this.chatService);
-    this.chatLogic.getMessgaesFromEndpoint(this.messages);
+    // this.chatLogic.getMessgaesFromEndpoint(this.messages); -- need to be fixed so it load only once
     this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll);
   }
-
 
   ngAfterViewChecked() {
     this.scrollToBottom();

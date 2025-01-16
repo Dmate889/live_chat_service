@@ -75,5 +75,16 @@ router.post('/register', (req, res) => {
         });             
     });
 
+    router.patch('/isactive', (req, res) => {
+        const {userName, isActive} = req.body;
+
+        db.setUserIsActive(userName, isActive, (err, result) =>{
+            if(result.success){
+                res.status(200).json({message: 'User isActive change has been changed successfully' });
+            }
+            else res.status(500).json({message: 'DB error when tried to change user isActive state'});
+        });
+    });
+
 
   module.exports = router;

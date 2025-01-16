@@ -151,6 +151,18 @@ function setStateUsersOffline(name, callback) {
   });
 }
 
+function setUserIsActive(name, isActive, callback){
+  const query = 'UPDATE users SET isActive = ? WHERE name = ?';
+
+  db.run(query,[name,isActive], (err) => {
+    if(err){
+      console.log(`There was a probslem with the ${query} query`);
+      return callback(err);
+    }
+    else console.log(`${user}'s isActive state has been changed`);
+  })
+}
+
 //Exporting the functions, so it can be used in server.js
 module.exports = {
   addMessage,
@@ -161,5 +173,6 @@ module.exports = {
   getUserRecordsAll,
   setStateUsersOnline,
   setStateUsersOffline,
+  setUserIsActive,
   JWT_SECRET,
 };
