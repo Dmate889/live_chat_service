@@ -27,8 +27,13 @@ export class UserPanelComponent extends ChatComponent implements OnInit{
   override ngAfterViewChecked(): void {}
   override scrollToBottom(): void {}
 
-  backToChat(e: any){
+  backToChat(){
     this.router.navigate(['/chat']);
+  }
+
+ override navigateToAdminPanel(){
+
+    this.router.navigate(['/adminPanel']);
   }
 
 }
