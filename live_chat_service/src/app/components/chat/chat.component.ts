@@ -31,7 +31,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.chatLogic.getChatMessages(this.messages, this.chatService);
     this.chatLogic.getChatUsers(this.userRec, this.userRecAll, this.chatService);
     this.chatLogic.getMessgaesFromEndpoint(this.messages);
-    this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll); //Sometimes users are not loaded for Online users - need to be fixed
+    this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll);
   }
 
   ngAfterViewChecked() {
