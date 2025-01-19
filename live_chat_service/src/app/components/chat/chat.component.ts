@@ -99,6 +99,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   navigateToAdminPanel(){
+    
     this.router.navigate(['/adminPanel']);
   }
 }

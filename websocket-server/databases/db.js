@@ -156,7 +156,7 @@ function setUserIsActive(name, isActive, callback){
 
   db.run(query,[isActive,name], (err) => {
     if(err){
-      console.log(`There was a probslem with the ${query} query`);
+      console.log(`There was a problem with the ${query} query`);
       return callback(err);
     }
     else console.log(`The isActive state has been changed on DB`);
