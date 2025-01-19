@@ -25,7 +25,9 @@ export class AdminPanelComponent extends UserPanelComponent {
   }
 
   navigateToChat(){
-    this.router.navigate(['/chat']);
+    this.router.navigate(['/chat']).then(() => {
+      window.location.reload();
+    })
   }
 
   setUserIsActive(userName: string, isActive: number) {

@@ -61,6 +61,7 @@ export class Chat_component_logic {
   }
 
   getMessgaesFromEndpoint(messages: any[]) {
+    messages = [];
     this.getMesagesAgain().subscribe(
       (response: any) => {
         response.newMessages.forEach((message: any) => {
@@ -69,6 +70,9 @@ export class Chat_component_logic {
             sender: message.name,
             timestamp: message.timestamp,
           });
+          console.log('Messages are pushed to messages array'+ messages.map((m) => {
+              console.log('The message is: ' + JSON.stringify(m));
+          }));
         });
       },
       (error) => {
