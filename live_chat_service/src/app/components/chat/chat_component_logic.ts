@@ -53,10 +53,6 @@ export class Chat_component_logic {
       } else {
         console.error('Unexpected userAll list format:', response);
       }
-
-      userRecAll.map((user => {
-        console.log('The user object JSOn on frontend: '+ JSON.stringify(user));
-      }))
     });
   }
 

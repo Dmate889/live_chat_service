@@ -24,6 +24,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   showSmileyDropdown = false;
   userPanelOnline = true;
   userPanelAll = false;
+  
 
   constructor(protected chatService: ChatService, protected router: Router, protected http: HttpClient, protected chatLogic: Chat_component_logic) {}
 
@@ -32,6 +33,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.chatLogic.getChatUsers(this.userRec, this.userRecAll, this.chatService);
     this.chatLogic.getMessgaesFromEndpoint(this.messages);
     this.chatLogic.getChatUsersUserPanel(this.userRec, this.userRecAll);
+    
   }
 
   ngAfterViewChecked() {
@@ -99,7 +101,6 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   navigateToAdminPanel(){
-    
-    this.router.navigate(['/adminPanel']);
+     this.router.navigate(['/adminPanel']);
   }
 }

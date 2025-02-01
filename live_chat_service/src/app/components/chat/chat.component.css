@@ -250,6 +250,10 @@ button:hover {
   font-weight: 700;
 }
 
+.adminPanelButtonUser{
+  display: none;
+}
+
 @container (max-width: 768px) {
   .chat-box {
     width: 95%;

@@ -64,10 +64,10 @@ body{
     right: 10px;
     top: 20px;
     background-color:chartreuse;
+    transition: height 0.2s;
 }
 
 .userIsactive:hover{
-    width: 110px;
     height: 50px;
 }
 .active{
